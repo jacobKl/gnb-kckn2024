@@ -73,8 +73,15 @@ class GTFSController extends Controller
             // Fetch all stops for these stop IDs
             $stops = Stop::whereIn('stop_id', $stopIds)->get();
 
-            // Attach stops to the route
+            // Collect all shape IDs from the trips
+            $shapeIds = $trips->pluck('shape_id')->unique();
+
+            // Fetch all shapes points for these shape IDs
+            $shapes = Shapes::whereIn('shape_id', $shapeIds)->orderBy('shape_pt_sequence')->get();
+
+            // Attach stops and shapes to the route
             $route->stops = $stops;
+            $route->shapes = $shapes;
         }
 
         return response()->json($routes);
