@@ -9,6 +9,7 @@ use App\Models\StopTime;
 use App\Models\Trips;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class GTFSController extends Controller
 {
@@ -106,5 +107,13 @@ class GTFSController extends Controller
         $trips = Trips::all();
 
         return response()->json($trips);
+    }
+
+    public function getStopsByPrefix(Request $request): JsonResponse
+    {
+        $prefix = Str::lower($request->get('prefix'));
+
+        $stops = Stop::all()->filter(fn(Stop $stop) => Str::startsWith(Str::lower($stop->stop_name), [$prefix]));
+        return response()->json($stops);
     }
 }

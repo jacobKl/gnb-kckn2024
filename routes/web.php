@@ -26,5 +26,6 @@ Route::prefix('api')->group(function () {
     Route::get("/stops", [GTFSController::class, 'getStops']);
     Route::get("/times-by-stop/{stopId}", [GTFSController::class, 'getTimesByStop']);
     Route::get("/trips", [GTFSController::class, 'getTrips']);
+    Route::get("/get-stops-by-prefix", [GTFSController::class, 'getStopsByPrefix']);
 });
 require __DIR__ . '/auth.php';
