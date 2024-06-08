@@ -19,10 +19,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('api')->group(function () {
-    Route::get("/get-shapes-by-route/{routeId}", [GTFSController::class,'getShapesByRoute']);
-
-
-    //Routes
-    Route::get("/routes", [GTFSController::class,'getRoutes']);
+    Route::get("/get-shapes-by-route/{routeId}", [GTFSController::class, 'getShapesByRoute']);
+    Route::get("/routes", [GTFSController::class, 'getRoutes']);
+    Route::get("/stops", [GTFSController::class, 'getStops']);
+    Route::get("/times-by-stop/{stopId}", [GTFSController::class, 'getTimesByStop']);
+    Route::get("/trips", [GTFSController::class, 'getTrips']);
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
