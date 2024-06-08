@@ -208,12 +208,16 @@ class GTFSController extends Controller
             $request->post('latitudeFrom'), $request->post('longitudeFrom'), $request->post('latitudeTo'), $request->post('longitudeTo')
         );
 
+        $emission = $this->emissionModelService->estimateEmission($request->post('engineCapacity'), $request->post('fuelConsumption'));
+
         return response()->json([
-            'distance' => $distance
+            'distance' => $distance,
+            'emission' => $emission,
+            'calculatedEmission' => $distance * $emission / 1000
         ]);
     }
 
-    public function getCrsfToken()
+    public function getCsrfToken()
     {
         return csrf_token();
     }
