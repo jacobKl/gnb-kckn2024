@@ -66,7 +66,11 @@ class RouteService
                 })->first();
 
                 if ($startStop->stop_sequence < $endStop->stop_sequence) {
-                    $filteredDirectTrips->push($startTripsWithStops->get($tripId)->map(function (StopTime $stopTime) use ($stopsMap) {
+                    $filteredDirectTrips->push($startTripsWithStops->get($tripId)
+                        ->filter(function (StopTime $stopTime) use ($startStop, $endStop) {
+                            return $stopTime->stop_sequence >= $startStop->stop_sequence && $stopTime->stop_sequence <= $endStop->stop_sequence;
+                        })
+                        ->map(function (StopTime $stopTime) use ($stopsMap) {
                         return [...$stopTime->toArray(), "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
                             "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
                             "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
@@ -107,7 +111,18 @@ class RouteService
                     foreach ($intersection as $intersectionId)
                         $currentlyChecked = $endStops->filter(fn(StopTime $stopTime) => $stopTime->stop_id == $intersectionId)->first();
                     if ($currentlyChecked->stop_sequence < $destination->stop_sequence) {
-                        $connection[$startTripId][] = ["start" => $startStops, "end" => $endStops];
+                        $connection[$startTripId][] = ["start" => $startStops->map(function (StopTime $stopTime) use ($stopsMap) {
+                            return [...$stopTime->toArray(),
+                                "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
+                                "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
+                                "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
+                        }),
+                            "end" => $endStops->map(function (StopTime $stopTime) use ($stopsMap) {
+                                return [...$stopTime->toArray(),
+                                    "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
+                                    "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
+                                    "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
+                            })];
                         break;
                     }
                 }
