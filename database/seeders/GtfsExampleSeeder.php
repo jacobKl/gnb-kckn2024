@@ -25,8 +25,8 @@ class GtfsExampleSeeder extends Seeder
 //        $this->importData('feed_info', FeedInfo::class);
         $this->importData('routes', Routes::class);
         $this->importData('shapes', Shapes::class);
-//        $this->importData('stop_times', StopTime::class);
-//        $this->importData('stops', Stop::class);
+        $this->importData('stop_times', StopTime::class);
+        $this->importData('stops', Stop::class);
 //        $this->importData('transfers', Transfer::class);
         $this->importData('trips', Trips::class);
     }
