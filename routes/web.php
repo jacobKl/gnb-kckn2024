@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GTFSController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,9 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('api')->group(function () {
     Route::get("/get-shapes-by-route/{routeId}", [GTFSController::class,'getShapesByRoute']);
+
+
+    //Routes
+    Route::get("/routes", [GTFSController::class,'getRoutes']);
 });
 require __DIR__.'/auth.php';

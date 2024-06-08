@@ -23,4 +23,10 @@ class GTFSController extends Controller
 
         return response()->json($shapes);
     }
+
+    public function getRoutes(Request $request): JsonResponse{
+        $routes = Routes::all();
+
+        return response()->json($routes);
+    }
 }
