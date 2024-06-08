@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -12,16 +13,16 @@ return new class extends Migration {
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('route_id')->constrained('routes', "route_id");
+            $table->unsignedBigInteger('route_id');
             $table->integer("service_id");
             $table->integer("trip_id");
             $table->string("trip_headsign")
-                ->nullable();
+            ->nullable();
             $table->string("trip_short_name")
-                ->nullable();
+            ->nullable();
             $table->integer("direction_id");
             $table->integer("block_id");
-            $table->foreignId("shape_id")->constrained('shapes', "shape_id");
+            $table->unsignedBigInteger("shape_id");
             $table->string("wheelchair_accessible")
                 ->nullable();
             $table->timestamps();

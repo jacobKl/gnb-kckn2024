@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shapes', function (Blueprint $table) {
-            $table->id("shape_id");
+            $table->id();
+            $table->unsignedBigInteger("shape_id");
             $table->double("shape_pt_lat");
             $table->double("shape_pt_lon");
             $table->integer("shape_pt_sequence");
