@@ -114,6 +114,6 @@ class GTFSController extends Controller
         $prefix = Str::lower($request->get('prefix'));
 
         $stops = Stop::all()->filter(fn(Stop $stop) => Str::startsWith(Str::lower($stop->stop_name), [$prefix]));
-        return response()->json($stops);
+        return response()->json($stops->values());
     }
 }
