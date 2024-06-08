@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('route_id')->constrained('routes', "route_id");
+            $table->unsignedBigInteger('route_id');
             $table->integer("service_id");
             $table->integer("trip_id");
             $table->string("trip_headsign")
@@ -22,10 +22,10 @@ return new class extends Migration
             ->nullable();
             $table->integer("direction_id");
             $table->integer("block_id");
-            $table->foreignId("shape_id")->constrained('shapes',"shape_id");
+            $table->unsignedBigInteger("shape_id");
             $table->string("wheelchair_accessible")
                 ->nullable();
-
+            $table->timestamps();
         });
     }
 

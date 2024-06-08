@@ -1,0 +1,2 @@
+feed_publisher_name,feed_publisher_url,feed_lang,feed_start_date,feed_end_date
+Koleje Małopolskie sp. z o.o.,http://www.kolejemalopolskie.com.pl,pl,20240609,20240615
