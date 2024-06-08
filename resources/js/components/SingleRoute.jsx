@@ -3,15 +3,8 @@ import { Polyline } from 'react-leaflet'
 import { useQuery } from 'react-query'
 
 
-function SingleRoute({ route, routeColor }) {
-    const { isLoading, error, data } = useQuery({
-        queryKey: [`route-${route.route_id}-shapes`],
-        queryFn: () => fetch("/api/get-shapes-by-route/" + route.route_id).then((res) => res.json()),
-    });
-
-    if (isLoading) return;
-
-    const shapesById = data.reduce((acc, shape) => {
+function SingleRoute({ route }) {
+    const shapesById = route.shapes.reduce((acc, shape) => {
         if (!acc[shape.shape_id]) {
             acc[shape.shape_id] = [];
         }

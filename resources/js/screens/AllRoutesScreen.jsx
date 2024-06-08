@@ -1,18 +1,19 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
-import SingleRoute from "./SingleRoute";
+import SingleRoute from "../components/SingleRoute";
 
-function AllRoutes() {
+function AllRoutesScreen() {
     const { isLoading, error, data } = useQuery({
-        queryKey: ["routesData"],
+        queryKey: ["bigMapData"],
         queryFn: () =>
-            fetch("/api/routes").then((res) =>
+            fetch("/api/get-described-routes").then((res) =>
                 res.json()
             )
     });
 
     if (isLoading) return 'Loading...';
+    if (error) return 'Error';
 
     return <div>
         <MapContainer center={[50.049683, 19.944544]} zoom={9} scrollWheelZoom={false}>
@@ -24,4 +25,4 @@ function AllRoutes() {
     </div>;
 }
 
-export default AllRoutes;
+export default AllRoutesScreen;
