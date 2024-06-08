@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import SingleRoute from "../components/SingleRoute";
+import Loader from "../components/Loader";
 
 function AllRoutesScreen() {
     const [selectedRoute, setSelectedRoute] = useState(null);
@@ -11,7 +12,7 @@ function AllRoutesScreen() {
             fetch("/api/get-described-routes").then((res) => res.json()),
     });
 
-    if (isLoading) return "Loading...";
+    if (isLoading) return <Loader/>;
     if (error) return "Error";
 
     const handleClick = (route) => {
@@ -24,12 +25,16 @@ function AllRoutesScreen() {
         else setSelectedRoute(route);
     };
 
+
+
     return (
-        <div className="flex flex-row">
-            <div className="bg-white p-2 rounded shadow basis-1/4">
+        <div className="flex flex-row allroutes">
+            <div className="bg-white p-2 rounded shadow basis-1/4 sidebar">
                 {data.map((route, j) => (
                     <div
-                        className="bg-white my-4 rounded flex flex-col text-center items-center cursor-pointer"
+                        className={`bg-white my-4 p-2 rounded flex flex-col text-center items-center cursor-pointer ${
+                            selectedRoute ? (selectedRoute.id == route.id ? "bg-gray-100" : null) : null
+                        }`}
                         key={j}
                         onClick={() => handleClick(route)}
                     >
@@ -50,7 +55,16 @@ function AllRoutesScreen() {
                 >
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                     {selectedRoute ? (
-                        <SingleRoute route={selectedRoute} color={selectedRoute}></SingleRoute>
+                        <>
+                            <SingleRoute route={selectedRoute} color={selectedRoute}></SingleRoute>
+                            {
+                                selectedRoute.stops.map((stop,j) => (
+                                    <Marker key={j} position={{lat: stop.stop_lat, lon: stop.stop_lon}}>
+                                        <Popup>{stop.stop_name}</Popup>
+                                    </Marker>
+                                ))
+                            }
+                        </>
                     ) : (
                         data.map((route, j) => (
                             <SingleRoute key={j} route={route}></SingleRoute>
