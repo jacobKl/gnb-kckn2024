@@ -1,23 +1,25 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { MapContainer, TileLayer, Marker,Popup, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import SingleRoute from "./SingleRoute";
 
 function AllRoutes() {
-    const { isPending, error, data } = useQuery({
-        queryKey: ["repoData"],
+    const { isLoading, error, data } = useQuery({
+        queryKey: ["routesData"],
         queryFn: () =>
-            fetch("/").then((res) =>
+            fetch("/api/routes").then((res) =>
                 res.json()
-            ),
+            )
     });
 
-    if (isPending) return 'Loading...';
+    if (isLoading) return 'Loading...';
 
     return <div>
-        <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+        <MapContainer center={[50.049683, 19.944544]} zoom={9} scrollWheelZoom={false}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            {data.map((route,j) => (<SingleRoute key={j} route={route}></SingleRoute>))}
         </MapContainer>
     </div>;
 }
