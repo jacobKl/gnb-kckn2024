@@ -1,105 +1,103 @@
 route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
-244,,A39,Zaczarnie - Brzozówka - Tarnów-A39,,3,,000000,F5F5F5
-315,,A38,Tarnów - Lisia Góra - Nowa Jastrząbka-A38,,3,,000000,F5F5F5
-161,,A27,Zawada - Tarnów-A27,,3,,000000,F5F5F5
-233,,A28,Tarnów - Poręba Radlna - Piotrkowice p. Łękawka Kościół-A28,,3,,FAC08F,282828
-167,,A29,Tarnów - Zgłobice - Tarnów-A29,,3,,000000,F5F5F5
-316,,A50,Proszowice - Nowe Brzesko - Kraków-A50,,3,,00DA61,282828
-307,,A1,Myślenice - Mogilany - Kraków-A1,,3,,F00000,F5F5F5
-259,,A43,Skawina - Przytkowice - Kalwaria Zebrzydowska-A43,,3,,000000,F5F5F5
-336,,A12,Kraków - Trzyciąż - Olkusz-A12,,3,,92CDDC,282828
-237,,A23,Tarnów - Gorlice - Wysowa Zdrój-A23,,3,,000000,F5F5F5
-291,,A7,Podłęże - Niepołomice - Proszowice-A7,,3,,17365D,F5F5F5
-258,,A21,Nowy Sącz- Stary Sącz - Łącko - Ochotnica Górna - Nowy Targ-A21,,3,,000000,F5F5F5
-18,,A8,Dobczyce - Raciborsko - Wieliczka-A8,,3,,000000,F5F5F5
-280,,A6,Łapanów - Dobranowice - Wieliczka-A6,,3,,B8CCE4,282828
-225,,A22,Nowy Sącz - Zakliczyn - Wojnicz - Tarnów-A22,,3,,000000,F5F5F5
-324,,A25,Andrychów - Zator - Smolice-A25,,3,,000000,F5F5F5
-325,,A40,Kęty - Wadowice - Kraków-A40,,3,,F0E68C,282828
-245,,A10,Krzeszowice - Gorenice - Olkusz-A10,,3,,000000,F5F5F5
-210,,A3,Bochnia - Nowy Wiśnicz - Limanowa-A3,,3,,000000,F5F5F5
-295,,A2,Wieliczka - Świątniki Górne - Myślenice-A2,,3,,E36C09,282828
-303,,A37,Podłęże - Wawrzeńczyce - Proszowice-A37,,3,,000000,F5F5F5
-208,,A24,Tarnów - Zbylitowska Góra - Tarnów (Mościce)-A24,,3,,000000,F5F5F5
-320,,A50,Kraków - Nowe Brzesko - Proszowice-A50,,3,,00EE6A,282828
-186,,A16,Wieliczka - Zakliczyn - Myślenice-A16,,3,,B2A2C7,282828
-19,,A8,Wieliczka - Raciborsko - Dobczyce-A8,,3,,938953,282828
-318,,A34,Jodłówka - Wałki - Wola Rzędzińska - Tarnów-A34,,3,,548DD4,282828
-338,,ZKA SKA1,Kraków Główny - Kraków Łobzów-ZKA SKA1,,3,,000000,F5F5F5
-249,,A28,Piotrkowice p.Łękawka Kościół - Poręba Radlna - Tarnów-A28,,3,,E36C09,282828
-332,,A44,Kraków - Baczyn - Alwernia-A44,,3,,000000,F5F5F5
-109,,A18,Siedlec - Książnice - Wieliczka-A18,,3,,000000,F5F5F5
-185,,A16,Myślenice -Zakliczyn - Wieliczka-A16,,3,,5F497A,F5F5F5
-314,,A38,Nowa Jastrząbka - Lisia Góra - Tarnów-A38,,3,,000000,F5F5F5
-144,,A32,Szczepanowice - Zgłobice - Tarnów-A32,,3,,000000,F5F5F5
-228,,A10,Olkusz - Gorenice - Krzeszowice-A10,,3,,000000,F5F5F5
-290,,A2,Myślenice - Świątniki Górne - Wieliczka-A2,,3,,E36C09,282828
-23,,A17,Wieliczka - Dobczyce - Szczyrzyc -A17,,3,,DDD9C3,282828
-267,,A5,Brzesko - Szczurowa - Wietrzychowice-A5,,3,,000000,F5F5F5
-256,,A22,Tarnów - Wojnicz - Zakliczyn - Nowy Sącz-A22,,3,,000000,F5F5F5
-335,,A44,Alwernia - Baczyn - Kraków-A44,,3,,000000,F5F5F5
-255,,A34,Tarnów - Wola Rzędzińska - Wałki - Jodłówka-A34,,3,,8DB3E2,282828
-330,,A46,Ryglice - Skrzyszów - Tarnów-A46,,3,,000000,F5F5F5
-323,,A25,Smolice- Zator - Andrychów-A25,,3,,000000,F5F5F5
-180,,A1,Kraków - Mogilany - Myślenice-A1,,3,,F00000,F5F5F5
-232,,A39,Tarnów - Brzozówka - Zaczarnie-A39,,3,,000000,F5F5F5
-209,,A24,Tarnów (Mościce) - Zbylitowska Góra - Tarnów-A24,,3,,000000,F5F5F5
-24,,A9,Limanowa - Dobra - Dobczyce - Wieliczka-A9,,3,,4F81BD,F5F5F5
-337,,A12,Olkusz - Trzyciąż - Kraków-A12,,3,,22D6E1,282828
-313,,A35,Jodłówka - Wałki P/POLMARK - Górówka - Wola Rzędzińska - Tarnów-A35,,3,,000000,F5F5F5
-217,,A3,Limanowa - Nowy Wiśnicz - Bochnia-A3,,3,,000000,F5F5F5
-151,,A32,Tarnów - Zgłobice - Szczepanowice-A32,,3,,000000,F5F5F5
-275,,A6,Wieliczka - Dobranowice - Łapanów-A6,,3,,D99694,282828
-341,,A43,Kalwaria Zebrzydowska - Przytkowice - Skawina-A43,,3,,000000,F5F5F5
-331,,ZKA SKA1,Kraków Mydlniki - Kraków Lotnisko bezpośrednio-ZKA SKA1,,3,,000000,F5F5F5
-241,,A35,Tarnów - Wola Rzędzińska - Górówka - Jadłówka - Wałki P/POLMARK-A35,,3,,000000,F5F5F5
-147,,A31,Tarnów - Tarnowiec - Świebodzin-A31,,3,,000000,F5F5F5
-250,,A32,Tarnów - Zgłobice Hotel Dunajec - Szczepanowice-A32,,3,,000000,F5F5F5
-150,,A33,Lichwin - Pleśna - Tarnów-A33,,3,,000000,F5F5F5
-271,,A5,Wietrzychowice - Szczurowa - Brzesko-A5,,3,,000000,F5F5F5
-240,,A36,Łukowa - Śmigno - Tarnów-A36,,3,,000000,F5F5F5
-288,,A7,Chobot - Niepołomice - Podłęże-A7,,3,,548DD4,282828
-297,,A14,Kraków - Czernichów - Spytkowice (Objazd)-A14,,3,,000000,F5F5F5
-253,,A32,Szczepanowice - Zgłobice Hotel Dunajec - Tarnów-A32,,3,,000000,F5F5F5
-299,,A7,Podłęże - Niepołomice - Chobot-A7,,3,,17365D,F5F5F5
-302,,A7,Proszowice - Niepołomice - Podłęże-A7,,3,,548DD4,282828
-168,,A15,Bukowina - Trstena-A15,,3,,000000,F5F5F5
-292,,A37,Proszowice - Wawrzeńczyce - Podłęże-A37,,3,,000000,F5F5F5
-262,,A21,Nowy Targ - Ochotnica Górna - Łącko - Stary Sącz - Nowy Sącz-A21,,3,,000000,F5F5F5
-128,,A31,Świebodzin - Tarnowiec - Tarnów-A31,,3,,000000,F5F5F5
-274,,A20,Iwkowa - Rajbrot - Bochnia-A20,,3,,000000,F5F5F5
-284,,A20,Bochnia - Rajbrot - Iwkowa-A20,,3,,000000,F5F5F5
-304,,A13,Olkusz - Sułoszowa - Kraków-A13,,3,,595959,F5F5F5
-171,,A27,Tarnów - Zawada-A27,,3,,000000,F5F5F5
-22,,A17,Szczyrzyc - Dobczyce - Wieliczka-A17,,3,,8DB3E2,282828
-145,,A33,Tarnów - Pleśna - Lichwin-A33,,3,,000000,F5F5F5
-326,,A40,Kraków - Wadowice - Kęty-A40,,3,,F0E68C,282828
-242,,A34,Tarnów - Wola Rzędzińska - Wałki P/SZPIC - Jodłówka-A34,,3,,000000,F5F5F5
-311,,A35,Jodłówka -Wałki - Górówka - Wola Rzędzińska - Tarnów-A35,,3,,E36C09,282828
-268,,A35,Tarnów - Wola Rzędzińska - Górówka - Jadłówka - Wałki -A35,,3,,B7DDE8,282828
-127,,A30,Tarnów - Koszyce Wielkie - Zgłobice - Tarnów-A30,,3,,000000,F5F5F5
-114,,A18,Wieliczka - Książnice - Siedlec-A18,,3,,000000,F5F5F5
-293,,A46,Tarnów - Skrzyszów - Ryglice-A46,,3,,000000,F5F5F5
-339,,ZKA SKA1,Kraków Łobzów - Kraków Główny-ZKA SKA1,,3,,000000,F5F5F5
-322,,A45,Nowy Targ - Jurgów - Stary Smokovec-A45,,3,,000000,F5F5F5
-251,,A11,Myślenice - Mszana Dolna - Poręba Wielka Koninki-A11,,3,,FFFF00,282828
-31,,A4,Szczurowa - Uście Solne - Bochnia-A4,,3,,4BACC6,282828
-224,,A36,Tarnów - Śmigno - Łukowa-A36,,3,,000000,F5F5F5
-68,,A26,Tarnów - Brzesko - Bochnia-A26,,3,,E5B9B7,282828
-160,,A15,Trstena - Bukowina-A15,,3,,000000,F5F5F5
-321,,A45,Stary Smokovec - Jurgów - Nowy Targ-A45,,3,,000000,F5F5F5
-319,,A34,Jodłówka - Wałki P/SZPIC - Wola Rzędzińska - Tarnów-A34,,3,,000000,F5F5F5
-289,,A23,Wysowa Zdrój - Gorlice - Tarnów-A23,,3,,000000,F5F5F5
-265,,A11,Myślenice - Wiśniowa - Mszana Dolna-A11,,3,,FFFF00,282828
-25,,A9,Wieliczka - Dobczyce - Dobra - Limanowa-A9,,3,,938953,282828
-264,,A36,Śmigno - Pawęzów - Tarnów-A36,,3,,000000,F5F5F5
-243,,A11,Poręba Wielka Koninki - Mszana Dolna - Myślenice-A11,,3,,FFFF00,282828
-266,,A36,Tarnów - Pawęzów - Śmigno-A36,,3,,000000,F5F5F5
-300,,A14,Spytkowice - Czernichów - Kraków (Objazd)-A14,,3,,000000,F5F5F5
-334,,ZKA SKA1,Kraków Lotnisko - Kraków Mydlniki-ZKA SKA1,,3,,000000,F5F5F5
-340,,ZKA SKA1,Kraków Mydlniki - Kraków Lotnisko-ZKA SKA1,,3,,000000,F5F5F5
-301,,A4,Bochnia - Uście Solne - Szczurowa-A4,,3,,B7DDE8,282828
-270,,A11,Mszana Dolna - Wiśniowa - Myślenice-A11,,3,,FFFF00,282828
-333,,ZKA SKA1,Kraków Lotnisko - Kraków Mydlniki bezpośrednio-ZKA SKA1,,3,,000000,F5F5F5
-305,,A13,Kraków - Sułoszowa - Olkusz-A13,,3,,7F7F7F,F5F5F5
-154,,ZKA SKA1,Kraków Lotnisko - Kraków Główny-ZKA SKA1,,3,,000000,F5F5F5
+244,,A39,Zaczarnie - Brzozówka - Tarnów-A39,,3,,A8E659,F5F5F5
+315,,A38,Tarnów - Lisia Góra - Nowa Jastrząbka-A38,,3,,2CCBC4,F5F5F5
+161,,A27,Zawada - Tarnów-A27,,3,,250D9B,F5F5F5
+233,,A28,Tarnów - Poręba Radlna - Piotrkowice p. Łękawka Kościół-A28,,3,,DD1DE8,282828
+167,,A29,Tarnów - Zgłobice - Tarnów-A29,,3,,BB9A8C,F5F5F5
+316,,A50,Proszowice - Nowe Brzesko - Kraków-A50,,3,,194C03,282828
+307,,A1,Myślenice - Mogilany - Kraków-A1,,3,,13D71F,F5F5F5
+259,,A43,Skawina - Przytkowice - Kalwaria Zebrzydowska-A43,,3,,4AB5D9,F5F5F5
+336,,A12,Kraków - Trzyciąż - Olkusz-A12,,3,,97D5EC,282828
+237,,A23,Tarnów - Gorlice - Wysowa Zdrój-A23,,3,,B4E733,F5F5F5
+291,,A7,Podłęże - Niepołomice - Proszowice-A7,,3,,572A1B,F5F5F5
+258,,A21,Nowy Sącz- Stary Sącz - Łącko - Ochotnica Górna - Nowy Targ-A21,,3,,74B983,F5F5F5
+18,,A8,Dobczyce - Raciborsko - Wieliczka-A8,,3,,9FFE58,F5F5F5
+280,,A6,Łapanów - Dobranowice - Wieliczka-A6,,3,,B1467C,282828
+225,,A22,Nowy Sącz - Zakliczyn - Wojnicz - Tarnów-A22,,3,,810AF0,F5F5F5
+324,,A25,Andrychów - Zator - Smolice-A25,,3,,B19249,F5F5F5
+245,,A10,Krzeszowice - Gorenice - Olkusz-A10,,3,,DAE043,F5F5F5
+210,,A3,Bochnia - Nowy Wiśnicz - Limanowa-A3,,3,,977AF0,F5F5F5
+295,,A2,Wieliczka - Świątniki Górne - Myślenice-A2,,3,,75FCA1,282828
+303,,A37,Podłęże - Wawrzeńczyce - Proszowice-A37,,3,,663D6E,F5F5F5
+208,,A24,Tarnów - Zbylitowska Góra - Tarnów (Mościce)-A24,,3,,17B1E3,F5F5F5
+320,,A50,Kraków - Nowe Brzesko - Proszowice-A50,,3,,515AE0,282828
+186,,A16,Wieliczka - Zakliczyn - Myślenice-A16,,3,,B8A757,282828
+19,,A8,Wieliczka - Raciborsko - Dobczyce-A8,,3,,D2CB44,282828
+318,,A34,Jodłówka - Wałki - Wola Rzędzińska - Tarnów-A34,,3,,3C58A6,282828
+249,,A28,Piotrkowice p.Łękawka Kościół - Poręba Radlna - Tarnów-A28,,3,,773579,282828
+332,,A44,Kraków - Baczyn - Alwernia-A44,,3,,A5AE48,F5F5F5
+109,,A18,Siedlec - Książnice - Wieliczka-A18,,3,,DFAB48,F5F5F5
+185,,A16,Myślenice -Zakliczyn - Wieliczka-A16,,3,,E9FD8F,F5F5F5
+314,,A38,Nowa Jastrząbka - Lisia Góra - Tarnów-A38,,3,,067F02,F5F5F5
+144,,A32,Szczepanowice - Zgłobice - Tarnów-A32,,3,,9777D4,F5F5F5
+228,,A10,Olkusz - Gorenice - Krzeszowice-A10,,3,,7F491D,F5F5F5
+290,,A2,Myślenice - Świątniki Górne - Wieliczka-A2,,3,,D5DD45,282828
+23,,A17,Wieliczka - Dobczyce - Szczyrzyc -A17,,3,,CD937B,282828
+267,,A5,Brzesko - Szczurowa - Wietrzychowice-A5,,3,,B38B70,F5F5F5
+256,,A22,Tarnów - Wojnicz - Zakliczyn - Nowy Sącz-A22,,3,,DEB0F5,F5F5F5
+335,,A44,Alwernia - Baczyn - Kraków-A44,,3,,C00185,F5F5F5
+326,,A40,Kraków - Wadowice - Kęty-A40,,3,,E29A08,282828
+255,,A34,Tarnów - Wola Rzędzińska - Wałki - Jodłówka-A34,,3,,55D0CE,282828
+330,,A46,Ryglice - Skrzyszów - Tarnów-A46,,3,,01506A,F5F5F5
+323,,A25,Smolice- Zator - Andrychów-A25,,3,,62EA69,F5F5F5
+180,,A1,Kraków - Mogilany - Myślenice-A1,,3,,9B3361,F5F5F5
+232,,A39,Tarnów - Brzozówka - Zaczarnie-A39,,3,,40D627,F5F5F5
+209,,A24,Tarnów (Mościce) - Zbylitowska Góra - Tarnów-A24,,3,,44EC5A,F5F5F5
+24,,A9,Limanowa - Dobra - Dobczyce - Wieliczka-A9,,3,,F85933,F5F5F5
+337,,A12,Olkusz - Trzyciąż - Kraków-A12,,3,,DA5663,282828
+313,,A35,Jodłówka - Wałki P/POLMARK - Górówka - Wola Rzędzińska - Tarnów-A35,,3,,8C5303,F5F5F5
+217,,A3,Limanowa - Nowy Wiśnicz - Bochnia-A3,,3,,F0520E,F5F5F5
+151,,A32,Tarnów - Zgłobice - Szczepanowice-A32,,3,,C571F8,F5F5F5
+275,,A6,Wieliczka - Dobranowice - Łapanów-A6,,3,,341C70,282828
+341,,A43,Kalwaria Zebrzydowska - Przytkowice - Skawina-A43,,3,,4D03DF,F5F5F5
+241,,A35,Tarnów - Wola Rzędzińska - Górówka - Jadłówka - Wałki P/POLMARK-A35,,3,,47C537,F5F5F5
+147,,A31,Tarnów - Tarnowiec - Świebodzin-A31,,3,,1B2EE4,F5F5F5
+250,,A32,Tarnów - Zgłobice Hotel Dunajec - Szczepanowice-A32,,3,,F67007,F5F5F5
+150,,A33,Lichwin - Pleśna - Tarnów-A33,,3,,40D843,F5F5F5
+271,,A5,Wietrzychowice - Szczurowa - Brzesko-A5,,3,,0EC89B,F5F5F5
+240,,A36,Łukowa - Śmigno - Tarnów-A36,,3,,6D6D8D,F5F5F5
+288,,A7,Chobot - Niepołomice - Podłęże-A7,,3,,825B8F,282828
+297,,A14,Kraków - Czernichów - Spytkowice (Objazd)-A14,,3,,FCCD72,F5F5F5
+253,,A32,Szczepanowice - Zgłobice Hotel Dunajec - Tarnów-A32,,3,,C861BE,F5F5F5
+299,,A7,Podłęże - Niepołomice - Chobot-A7,,3,,DCEFB0,F5F5F5
+302,,A7,Proszowice - Niepołomice - Podłęże-A7,,3,,B4C613,282828
+168,,A15,Bukowina - Trstena-A15,,3,,6095F3,F5F5F5
+292,,A37,Proszowice - Wawrzeńczyce - Podłęże-A37,,3,,145D59,F5F5F5
+262,,A21,Nowy Targ - Ochotnica Górna - Łącko - Stary Sącz - Nowy Sącz-A21,,3,,8FBC3A,F5F5F5
+128,,A31,Świebodzin - Tarnowiec - Tarnów-A31,,3,,4CA52F,F5F5F5
+304,,A13,Olkusz - Sułoszowa - Kraków-A13,,3,,CB504B,F5F5F5
+171,,A27,Tarnów - Zawada-A27,,3,,729995,F5F5F5
+22,,A17,Szczyrzyc - Dobczyce - Wieliczka-A17,,3,,1D6C6B,282828
+145,,A33,Tarnów - Pleśna - Lichwin-A33,,3,,9646C1,F5F5F5
+242,,A34,Tarnów - Wola Rzędzińska - Wałki P/SZPIC - Jodłówka-A34,,3,,6BF4A7,F5F5F5
+311,,A35,Jodłówka -Wałki - Górówka - Wola Rzędzińska - Tarnów-A35,,3,,AC93E6,282828
+268,,A35,Tarnów - Wola Rzędzińska - Górówka - Jadłówka - Wałki -A35,,3,,E19A1D,282828
+127,,A30,Tarnów - Koszyce Wielkie - Zgłobice - Tarnów-A30,,3,,AE28EC,F5F5F5
+325,,A40,Kęty - Wadowice - Kraków-A40,,3,,4E588F,282828
+114,,A18,Wieliczka - Książnice - Siedlec-A18,,3,,3FA796,F5F5F5
+293,,A46,Tarnów - Skrzyszów - Ryglice-A46,,3,,E4D406,F5F5F5
+322,,A45,Nowy Targ - Jurgów - Stary Smokovec-A45,,3,,9738BF,F5F5F5
+251,,A11,Myślenice - Mszana Dolna - Poręba Wielka Koninki-A11,,3,,5E04A4,282828
+31,,A4,Szczurowa - Uście Solne - Bochnia-A4,,3,,3C48AD,282828
+224,,A36,Tarnów - Śmigno - Łukowa-A36,,3,,8E6874,F5F5F5
+68,,A26,Tarnów - Brzesko - Bochnia-A26,,3,,B80F47,282828
+160,,A15,Trstena - Bukowina-A15,,3,,D5CE7B,F5F5F5
+321,,A45,Stary Smokovec - Jurgów - Nowy Targ-A45,,3,,DF0D79,F5F5F5
+319,,A34,Jodłówka - Wałki P/SZPIC - Wola Rzędzińska - Tarnów-A34,,3,,1D5BFA,F5F5F5
+289,,A23,Wysowa Zdrój - Gorlice - Tarnów-A23,,3,,155696,F5F5F5
+265,,A11,Myślenice - Wiśniowa - Mszana Dolna-A11,,3,,4996EC,282828
+25,,A9,Wieliczka - Dobczyce - Dobra - Limanowa-A9,,3,,86AEDF,282828
+154,,ZKA SKA1,Kraków Lotnisko - Kraków Główny-ZKA SKA1,,3,,8D8211,F5F5F5
+264,,A36,Śmigno - Pawęzów - Tarnów-A36,,3,,5B3506,F5F5F5
+243,,A11,Poręba Wielka Koninki - Mszana Dolna - Myślenice-A11,,3,,1CEE2F,282828
+266,,A36,Tarnów - Pawęzów - Śmigno-A36,,3,,07F8E0,F5F5F5
+300,,A14,Spytkowice - Czernichów - Kraków (Objazd)-A14,,3,,034C24,F5F5F5
+331,,ZKA SKA1,Kraków Mydlniki - Kraków Lotnisko bezpośrednio-ZKA SKA1,,3,,CCE012,F5F5F5
+301,,A4,Bochnia - Uście Solne - Szczurowa-A4,,3,,D85DEB,282828
+340,,ZKA SKA1,Kraków Mydlniki - Kraków Lotnisko-ZKA SKA1,,3,,FDD5B0,F5F5F5
+333,,ZKA SKA1,Kraków Lotnisko - Kraków Mydlniki bezpośrednio-ZKA SKA1,,3,,E86174,F5F5F5
+270,,A11,Mszana Dolna - Wiśniowa - Myślenice-A11,,3,,D636B7,282828
+305,,A13,Kraków - Sułoszowa - Olkusz-A13,,3,,5EBA4C,F5F5F5
+334,,ZKA SKA1,Kraków Lotnisko - Kraków Mydlniki-ZKA SKA1,,3,,29A316,F5F5F5
+274,,A20,Iwkowa - Rajbrot - Bochnia-A20,,3,,195359,F5F5F5
+284,,A20,Bochnia - Rajbrot - Iwkowa-A20,,3,,4736EA,F5F5F5
