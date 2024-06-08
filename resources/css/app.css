@@ -3,5 +3,14 @@
 @tailwind utilities;
 
 .leaflet-container {
-    height: 800px;
+    height: 100vh;
+}
+
+.border-none {
+    border: none;
+}
+
+.max-input-height {
+height: 200px;
+overflow-y: scroll;
 }

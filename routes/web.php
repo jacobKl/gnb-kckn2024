@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('api')->group(function () {
     Route::get("/get-shapes-by-route/{routeId}", [GTFSController::class, 'getShapesByRoute']);
     Route::get("/get-stops-by-route/{routeId}", [GTFSController::class, 'getStopsForRoute']);
+    Route::get("/get-stops-by-route-name/{routeName}", [GTFSController::class, 'getStopsForRouteName']);
     Route::get("/get-described-routes", [GTFSController::class, 'getRoutesWithStops']);
     Route::get("/routes", [GTFSController::class, 'getRoutes']);
     Route::get("/stops", [GTFSController::class, 'getStops']);
@@ -28,5 +29,6 @@ Route::prefix('api')->group(function () {
     Route::get("/trips", [GTFSController::class, 'getTrips']);
     Route::get("/get-stops-by-prefix", [GTFSController::class, 'getStopsByPrefix']);
     Route::get("/find-route", [GTFSController::class, 'findRoute']);
+    Route::get('/get-routes-by-string/{routeName}', [GTFSController::class, 'getRoutesByString']);
 });
 require __DIR__ . '/auth.php';

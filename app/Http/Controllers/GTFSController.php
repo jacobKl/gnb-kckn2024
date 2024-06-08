@@ -7,6 +7,7 @@ use App\Models\Shapes;
 use App\Models\Stop;
 use App\Models\StopTime;
 use App\Models\Trips;
+use App\Services\EmissionModelService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -14,6 +15,13 @@ use Illuminate\Support\Str;
 
 class GTFSController extends Controller
 {
+    protected EmissionModelService $emissionModelService;
+
+    public function __construct(EmissionModelService $emissionModelService)
+    {
+        $this->emissionModelService = $emissionModelService;
+    }
+
     public function getShapesByRoute($routeId): JsonResponse
     {
         // Fetch the trips for the given route
@@ -53,6 +61,44 @@ class GTFSController extends Controller
         $stops = Stop::whereIn('stop_id', $stopIds)->get();
 
         return response()->json($stops);
+    }
+
+    public function getStopsForRouteName(string $name): JsonResponse
+    {
+        $routes = Routes::query()
+            ->where('route_short_name', $name)
+            ->get();
+
+        // Fetch the trips for the given route
+        $trips = Trips::whereIn('route_id', $routes->pluck('route_id'))->get();
+
+        // Collect all trip IDs from the trips
+        $tripIds = $trips->pluck('trip_id');
+
+        // Fetch all stop times for these trip IDs
+        $stopTimes = StopTime::query()
+            ->whereIn('trip_id', $tripIds)
+            ->get();
+
+        // Collect all unique stop IDs from the stop times
+        $stopIds = $stopTimes->pluck('stop_id')->unique();
+
+        // Fetch all stops for these stop IDs
+        $stops = Stop::whereIn('stop_id', $stopIds)->get();
+
+        foreach ($stopTimes as $time) {
+            $time->stop = $stops->where('stop_id', $time->stop_id)->first();
+        }
+
+        foreach ($trips as $trip) {
+            $trip->times = $stopTimes->where('trip_id', $trip->trip_id)->values()->toArray();
+        }
+
+        foreach ($routes as $route) {
+            $route->trips = $trips->where('route_id', $route->route_id)->values()->toArray();
+        }
+
+        return response()->json($routes);
     }
 
     public function getRoutesWithStops(Request $request): JsonResponse
@@ -201,5 +247,59 @@ class GTFSController extends Controller
             'route' => 'change',
             'trips' => $connection
         ]);
+    }
+
+    public function getRoutesByString($stopName): JsonResponse
+    {
+        // Fetch stops with the given name
+        $stops = Stop::where('stop_name', 'like', '%' . $stopName . '%')->get();
+
+        // Collect all stop IDs from the stops
+        $stopIds = $stops->pluck('stop_id');
+
+        // Fetch stop times for these stop IDs
+        $stopTimes = StopTime::whereIn('stop_id', $stopIds)->get();
+
+        // Collect all trip IDs from the stop times
+        $tripIds = $stopTimes->pluck('trip_id')->unique();
+
+        // Fetch trips for these trip IDs
+        $trips = Trips::whereIn('trip_id', $tripIds)->get();
+
+        // Collect all route IDs from the trips
+        $routeIds = $trips->pluck('route_id')->unique();
+
+        // Fetch routes for these route IDs
+        $routes = Routes::whereIn('route_id', $routeIds)->get();
+
+        foreach ($stopTimes as $time) {
+            $time->stop = $stops->where('stop_id', $time->stop_id)->first();
+        }
+
+        foreach ($trips as $trip) {
+            $trip->times = $stopTimes->where('trip_id', $trip->trip_id)->values()->toArray();
+        }
+
+        foreach ($routes as $route) {
+            $route->trips = $trips->where('route_id', $route->route_id)->values()->toArray();
+        }
+
+        return response()->json($routes);
+    }
+
+    public function getCalculatedEmission(Request $request)
+    {
+        $distance = $this->emissionModelService->haversineGreatCircleDistance(
+            $request->post('latitudeFrom'), $request->post('longitudeFrom'), $request->post('latitudeTo'), $request->post('longitudeTo')
+        );
+
+        return response()->json([
+            'distance' => $distance
+        ]);
+    }
+
+    public function getCrsfToken()
+    {
+        return csrf_token();
     }
 }
