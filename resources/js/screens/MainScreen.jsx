@@ -7,19 +7,19 @@ function MainScreen() {
     const [ location, error ] = useUserLocation();
 
     return (
-        <>
+        <div className="main">
             <Header />
-            {/* <MapContainer
+            <MapContainer
                 center={[50.049683, 19.944544]}
-                zoom={9}
+                zoom={12}
                 scrollWheelZoom={false}
             >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {
                     location ? (<Marker position={location}></Marker>) : null
                 }
-            </MapContainer> */}
-        </>
+            </MapContainer>
+        </div>
     );
 }
 

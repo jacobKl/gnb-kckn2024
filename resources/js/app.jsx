@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import MainScreen from './screens/MainScreen';
 import AllRoutesScreen from './screens/AllRoutesScreen';
+import ScreenNav from './components/ScreenNav';
 
 export default function () {
     const [screen, setScreen] = useState(0);
@@ -18,9 +19,8 @@ export default function () {
 
     return (
         <>
-            <button onClick={() => setScreen(0)}>Main screen</button>
-            <button onClick={() => setScreen(1)}>All routes screen</button>
             {render(screen)}
+            <ScreenNav setScreen={setScreen} screen={screen}/>
         </>
     )
 }
