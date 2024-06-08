@@ -186,6 +186,7 @@ class GTFSController extends Controller
         $endTripsWithStops = collect(StopTime::whereIn("trip_id", $potentialEndTrips)->get()->all())
             ->groupBy(fn(StopTime $stopTime) => $stopTime->trip_id);
 
+        //check if there is some
         $directConnections = $potentialStartTrips->intersect($potentialEndTrips);
 
         if ($directConnections->isNotEmpty()) {
@@ -199,7 +200,7 @@ class GTFSController extends Controller
                 })->first();
 
                 if ($startStop->stop_sequence < $endStop->stop_sequence) {
-                    $filteredDirectTrips->push($tripId);
+                    $filteredDirectTrips->push($startTripsWithStops->get($tripId));
                 }
             }
             if ($filteredDirectTrips->isNotEmpty()) {
@@ -235,11 +236,10 @@ class GTFSController extends Controller
                     foreach ($intersection as $intersectionId)
                         $currentlyChecked = $endStops->filter(fn(StopTime $stopTime) => $stopTime->stop_id == $intersectionId)->first();
                     if ($currentlyChecked->stop_sequence < $destination->stop_sequence) {
-                        $connection[$startTripId][] = $endTripId;
+                        $connection[$startTripId][] = [ "start" => $startStops, "end" => $endStops];
                         break;
                     }
                 }
-
             }
         }
 
