@@ -67,15 +67,13 @@ class GTFSController extends Controller
         $tripIds = $trips->pluck('trip_id');
 
         // Fetch all stop times for these trip IDs
-        $stopTimes = StopTime::whereIn('trip_id', $tripIds)->get();
+        $stopTimes = StopTime::query()
+            ->whereIn('trip_id', $tripIds)
+            ->join('stops', 'stop_times.stop_id', '=', 'stops.stop_id')
+            ->orderBy('arrival_time')
+            ->get(['stop_times.*', 'stops.*']);
 
-        // Collect all unique stop IDs from the stop times
-        $stopIds = $stopTimes->pluck('stop_id')->unique();
-
-        // Fetch all stops for these stop IDs
-        $stops = Stop::whereIn('stop_id', $stopIds)->get();
-
-        return response()->json($stops);
+        return response()->json($stopTimes);
     }
 
     public function getRoutesWithStops(Request $request): JsonResponse
