@@ -5,3 +5,12 @@
 .leaflet-container {
     height: 800px;
 }
+
+.border-none {
+    border: none;
+}
+
+.max-input-height {
+height: 200px;
+overflow-y: scroll;
+}
