@@ -9,9 +9,17 @@ use App\Models\StopTime;
 use App\Models\Trips;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Services\RouteService;
 
 class GTFSController extends Controller
 {
+    protected $routeService;
+
+    public function __construct(RouteService $routeService)
+    {
+        $this->routeService = $routeService;
+    }
+
     public function getShapesByRoute($routeId): JsonResponse
     {
         // Fetch the trips for the given route
@@ -23,14 +31,22 @@ class GTFSController extends Controller
         // Fetch all shapes points for these shape IDs
         $shapes = Shapes::whereIn('shape_id', $shapeIds)->orderBy('shape_pt_sequence')->get();
 
-        return response()->json($shapes);
+        return response()->json([
+            'data' => $shapes,
+            'routes' => $this->routeService->getRoutes(),
+            'stops' => $this->routeService->getStops()
+        ]);
     }
 
     public function getRoutes(Request $request): JsonResponse
     {
         $routes = Routes::all();
 
-        return response()->json($routes);
+        return response()->json([
+            'data' => $routes,
+            'routes' => $this->routeService->getRoutes(),
+            'stops' => $this->routeService->getStops()
+        ]);
     }
 
     public function getStopsForRoute(int $routeId): JsonResponse
@@ -50,27 +66,43 @@ class GTFSController extends Controller
         // Fetch all stops for these stop IDs
         $stops = Stop::whereIn('stop_id', $stopIds)->get();
 
-        return response()->json($stops);
+        return response()->json([
+            'data' => $stops,
+            'routes' => $this->routeService->getRoutes(),
+            'stops' => $this->routeService->getStops()
+        ]);
     }
 
     public function getStops(Request $request): JsonResponse
     {
         $stops = Stop::all();
 
-        return response()->json($stops);
+        return response()->json([
+            'data' => $stops,
+            'routes' => $this->routeService->getRoutes(),
+            'stops' => $this->routeService->getStops()
+        ]);
     }
 
     public function getTimesByStop($stopId): JsonResponse
     {
         $stopTimes = StopTime::where('stop_id', $stopId)->orderBy('arrival_time')->get();
 
-        return response()->json($stopTimes);
+        return response()->json([
+            'data' => $stopTimes,
+            'routes' => $this->routeService->getRoutes(),
+            'stops' => $this->routeService->getStops()
+        ]);
     }
 
     public function getTrips(Request $request): JsonResponse
     {
         $trips = Trips::all();
 
-        return response()->json($trips);
+        return response()->json([
+            'data' => $trips,
+            'routes' => $this->routeService->getRoutes(),
+            'stops' => $this->routeService->getStops()
+        ]);
     }
 }
