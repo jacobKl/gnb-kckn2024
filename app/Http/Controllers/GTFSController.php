@@ -7,12 +7,20 @@ use App\Models\Shapes;
 use App\Models\Stop;
 use App\Models\StopTime;
 use App\Models\Trips;
+use App\Services\EmissionModelService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class GTFSController extends Controller
 {
+    protected EmissionModelService $emissionModelService;
+
+    public function __construct(EmissionModelService $emissionModelService)
+    {
+        $this->emissionModelService = $emissionModelService;
+    }
+
     public function getShapesByRoute($routeId): JsonResponse
     {
         // Fetch the trips for the given route
@@ -154,5 +162,29 @@ class GTFSController extends Controller
         $stops = Stop::all()->filter(fn(Stop $stop) => Str::startsWith(Str::lower($stop->stop_name), [$prefix]));
         $stops = $stops->unique(fn(Stop $stop) => $stop->stop_name);
         return response()->json($stops->values());
+    }
+
+    public function getRoutesByString($routeName): JsonResponse
+    {
+        // Fetch routes that match the search string in route_long_name
+        $routes = Routes::where('route_long_name', 'like', '%' . $routeName . '%')->get();
+
+        return response()->json($routes);
+    }
+
+    public function getCalculatedEmission(Request $request)
+    {
+        $distance = $this->emissionModelService->haversineGreatCircleDistance(
+            $request->post('latitudeFrom'), $request->post('longitudeFrom'), $request->post('latitudeTo'), $request->post('longitudeTo')
+        );
+
+        return response()->json([
+            'distance' => $distance
+        ]);
+    }
+
+    public function getCrsfToken()
+    {
+        return csrf_token();
     }
 }
