@@ -33,6 +33,26 @@ class GTFSController extends Controller
         return response()->json($routes);
     }
 
+    public function getStopsForRoute(int $routeId): JsonResponse
+    {
+        // Fetch the trips for the given route
+        $trips = Trips::where('route_id', $routeId)->get();
+
+        // Collect all trip IDs from the trips
+        $tripIds = $trips->pluck('trip_id');
+
+        // Fetch all stop times for these trip IDs
+        $stopTimes = StopTime::whereIn('trip_id', $tripIds)->get();
+
+        // Collect all unique stop IDs from the stop times
+        $stopIds = $stopTimes->pluck('stop_id')->unique();
+
+        // Fetch all stops for these stop IDs
+        $stops = Stop::whereIn('stop_id', $stopIds)->get();
+
+        return response()->json($stops);
+    }
+
     public function getStops(Request $request): JsonResponse
     {
         $stops = Stop::all();
