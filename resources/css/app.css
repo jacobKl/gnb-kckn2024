@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 .leaflet-container {
-    height: 100vh;
+    height: calc(100vh - 122px);
+    z-index: 10;
+    position: relative;
 }
 
 .border-none {
@@ -11,6 +13,28 @@
 }
 
 .max-input-height {
-height: 200px;
-overflow-y: scroll;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+
+.main .leaflet-container {
+        height: calc(100vh - 122px);
+        z-index: 10;
+        position: relative;
+}
+
+.allroutes .sidebar {
+    height: calc(100vh - 70px);
+    overflow: scroll;
+}
+
+.allroutes .leaflet-container {
+    height: calc(100vh - 70px);
+    z-index: 10;
+    position: relative;
+}
+
+.loader {
+    height: calc(100vh - 70px);
 }
