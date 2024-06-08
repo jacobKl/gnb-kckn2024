@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import SingleRoute from "../components/SingleRoute";
 
 function AllRoutesScreen() {
