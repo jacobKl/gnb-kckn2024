@@ -12,7 +12,7 @@ import { useQuery } from "react-query";
 import DebounceAutocompleteInput from "./../components/DebounceAutocompleteInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap } from "@fortawesome/free-solid-svg-icons";
-import MapSetter from "../components/MapSetter";
+import MapSetter, { createFontAwesomeMarkerIcon } from "../components/MapSetter";
 import Loader from "../components/Loader";
 import { calcTimeToSeconds } from "../components/Stops";
 
@@ -135,10 +135,11 @@ function MainScreen() {
                 scrollWheelZoom={false}
             >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                {location ? <Marker position={location}></Marker> : null}
+                {location ? <Marker position={location} icon={createFontAwesomeMarkerIcon("position")}></Marker> : null}
                 {selectedRoute ? selectedRoute.map((stop, j) => (
                     <>
                         <Marker
+                            icon={createFontAwesomeMarkerIcon(j == 0 ? "start" : j == selectedRoute.length - 1 ? "finish" : "stop")}
                             key={`${j}`}
                             position={{
                                 lat: stop.stop_lat,
