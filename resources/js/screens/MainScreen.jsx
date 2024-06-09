@@ -70,9 +70,9 @@ function MainScreen() {
     return (
         <div className="main">
             <header className="z-30 relative">
-                <nav className="bg-white p-2 border-gray-200 px-4 lg:px-6 py-2.5">
+                <nav className="bg-primary-500 p-2 border-gray-200 px-4 lg:px-6 py-2.5">
                     <div className="flex flex-wrap justify-between gap-4 items-center mx-auto max-w-screen-xl">
-                        <div className="text-lg font-bold">
+                        <div className="text-lg text-white font-bold">
                             TRASOWNICZEK
                         </div>
                         <div className="flex gap-2">
@@ -88,7 +88,7 @@ function MainScreen() {
                             />
 
                             <button
-                                className="shadow bg-green-500 p-1 px-2 rounded text-white"
+                                className="shadow bg-accent-500 p-1 px-3 rounded-full text-white"
                                 onClick={searchTrip}
                             // disabled={!firstStop && !secondStop}
                             >
