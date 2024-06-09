@@ -220,6 +220,7 @@ class GTFSController extends Controller
 
     public function getCalculatedEmission(Request $request)
     {
+        dump($request->post());
         $distance = $this->emissionModelService->haversineGreatCircleDistance(
             $request->post('latitudeFrom'), $request->post('longitudeFrom'), $request->post('latitudeTo'), $request->post('longitudeTo')
         );

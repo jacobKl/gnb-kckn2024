@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
     MapContainer,
     TileLayer,
@@ -7,14 +7,14 @@ import {
     useMap,
     Polyline,
 } from "react-leaflet";
-import { useUserLocation } from "./../hooks/useUserLocation";
-import { useQuery } from "react-query";
+import {useUserLocation} from "./../hooks/useUserLocation";
+import {useQuery} from "react-query";
 import DebounceAutocompleteInput from "./../components/DebounceAutocompleteInput";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMap } from "@fortawesome/free-solid-svg-icons";
-import MapSetter, { createFontAwesomeMarkerIcon } from "../components/MapSetter";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMap} from "@fortawesome/free-solid-svg-icons";
+import MapSetter, {createFontAwesomeMarkerIcon} from "../components/MapSetter";
 import Loader from "../components/Loader";
-import { calcTimeToSeconds } from "../components/Stops";
+import {calcTimeToSeconds} from "../components/Stops";
 
 const parseTime = (time) => {
     const part = time.substr(0, 5).split(':');
@@ -26,7 +26,7 @@ const getDescription = (track) => {
 
     track.reverse().forEach(step => {
         if (desc.filter(item => item.name == step.route_short_name).length == 0) {
-            desc.push({ name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time) })
+            desc.push({name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time)})
         }
     });
     return desc;
@@ -40,9 +40,9 @@ function MainScreen() {
     const [secondStop, setSecondStop] = useState();
     const [tripSearched, setTripSearched] = useState(false);
     const [zoom, setZoom] = useState(12);
-    const [center, setCenter] = useState({ lat: 50.049683, lng: 19.944544 });
+    const [center, setCenter] = useState({lat: 50.049683, lng: 19.944544});
 
-    const { isLoading, error, data, refetch } = useQuery({
+    const {isLoading, error, data, refetch} = useQuery({
         queryKey: ["routeData"],
         queryFn: () =>
             fetch(`/api/find-route?start_stop_id=2388&end_stop_id=1271`).then(
@@ -54,9 +54,8 @@ function MainScreen() {
     const searchTrip = async () => {
         refetch();
         if (localStorage.getItem("user_car") != null) {
-            let csrfToken = document.head.querySelector("[name~=csrf_token][content]").content;
             let lscar = JSON.parse(localStorage.getItem("user_car"))
-            let emissionsResponse = await fetch("/api/get-calculated-emission", {
+            let emissionsResponse = await fetch("/api/calculate-emission", {
                 method: "POST",
                 body: JSON.stringify({
                     latitudeFrom: firstStop.stop_lat,
@@ -67,7 +66,7 @@ function MainScreen() {
                     fuelConsumption: lscar.consumption
                 }),
                 headers: {
-                    'Content-Type': 'Application/Json',
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 }
             }).then(res => res.json())
@@ -76,7 +75,7 @@ function MainScreen() {
         setTripSearched(true);
     };
 
-    if (isLoading) return <Loader />;
+    if (isLoading) return <Loader/>;
 
     const handleRouteSelection = (track) => {
         setSelectedRoute(track);
@@ -110,7 +109,7 @@ function MainScreen() {
                             <button
                                 className="shadow bg-accent-500 p-1 px-3 rounded-full text-white"
                                 onClick={searchTrip}
-                            // disabled={!firstStop && !secondStop}
+                                // disabled={!firstStop && !secondStop}
                             >
                                 Szukaj
                             </button>
@@ -130,7 +129,8 @@ function MainScreen() {
                     <div className="fixed w-full bottom-[70px] bg-white z-40 flex p-1 gap-2">
                         {getDescription(selectedRoute).map(step => (
                             <div className="flex items-center">
-                                <div className="text-bold border w-[50px] h-[50px] flex items-center justify-center">{step.name}</div>
+                                <div
+                                    className="text-bold border w-[50px] h-[50px] flex items-center justify-center">{step.name}</div>
                                 <div className="ps-2">
                                     <div className="text-sm">{step.stop}</div>
                                     <div className="text-sm text-gray-500">{step.arrive}</div>
@@ -154,7 +154,7 @@ function MainScreen() {
                 zoom={12}
                 scrollWheelZoom={false}
             >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
                 {location ? <Marker position={location} icon={createFontAwesomeMarkerIcon("position")}></Marker> : null}
                 {selectedRoute ? selectedRoute.map((stop, j) => (
                     <>
@@ -184,7 +184,7 @@ function MainScreen() {
                         ) : null}
                     </>
                 )) : null}
-                <MapSetter zoom={zoom} center={center} />
+                <MapSetter zoom={zoom} center={center}/>
             </MapContainer>
             {/* {cmDisplayed ? <CarManager displayCM={changeCMDisplay} /> : null} */}
         </div>
