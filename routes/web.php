@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GTFSController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,5 +31,7 @@ Route::prefix('api')->group(function () {
     Route::get("/get-stops-by-prefix", [GTFSController::class, 'getStopsByPrefix']);
     Route::get("/find-route", [GTFSController::class, 'findRoute']);
     Route::get('/get-routes-by-string/{routeName}', [GTFSController::class, 'getRoutesByString']);
+
+    Route::get('/get-closest-stops/{latitude}/{longitude}', [LocationController::class, 'getClosestStops']);
 });
 require __DIR__ . '/auth.php';
