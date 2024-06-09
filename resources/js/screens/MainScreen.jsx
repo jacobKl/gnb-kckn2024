@@ -79,6 +79,7 @@ function MainScreen() {
     if (isLoading) return <Loader />;
 
     const handleRouteSelection = (track) => {
+        console.log(track)
         setSelectedRoute(track);
         setZoom(13);
         setCenter({
@@ -119,9 +120,9 @@ function MainScreen() {
                 </nav>
             </header>
             <div className="fixed w-[90%] flex top-[70px] gap-1 z-30 overflow-y-scroll left-[5%]">
-                {data ? data.trips.sort((a, b) => calcTimeToSeconds(a[0].departure_time) - calcTimeToSeconds(b[0].departure_time)).map((track, j) => (
-                    <p className="bg-white p-2 cursor-pointer" key={j} onClick={() => handleRouteSelection(track)}>
-                        {parseTime(track[0].departure_time)}
+                {data ? data.trips.sort((a, b) => calcTimeToSeconds(a.departure_time) - calcTimeToSeconds(b.departure_time)).map((track, j) => (
+                    <p className="bg-white p-2 cursor-pointer" key={j} onClick={() => handleRouteSelection(data.trips)}>
+                        {parseTime(track.departure_time)}
                     </p>
                 )) : null}
             </div>
