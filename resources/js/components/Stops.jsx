@@ -41,6 +41,7 @@ function Stops() {
         chooseTrip(false);
         setStopRoutes(false);
         chooseStop(false);
+        chooseRoute(name);
         setStops(higherDimensionStopsResponse);
         setSlicedStops(higherDimensionStopsResponse[0])
         setStopsPair(0)
@@ -72,6 +73,7 @@ function Stops() {
             <div className='bg-primary-500'>
 
                 <div className=''>
+                    <h2 className='bg-primary-100 m-1 p-2 text-white rounded-md'>Wybierz linię:</h2>
                     {data.sort(
                         (a, b) => (a.route_short_name > b.route_short_name ? 1 : -1))
                         .reduce((acc, current) => {
@@ -91,7 +93,8 @@ function Stops() {
                 </div>
                 {stops ?
                     <div>
-                        {stops.map((stop, idx) => (<button key={idx} className={`${stopsPair == idx ? "bg-accent-500" : "bg-[#7077A1]"} p-1 m-1 rounded text-white`} onClick={stopsPair == idx ? () => changeDirection(chosenDirection == "right" ? "left" : "right") : () => changeSelectedRoute(idx)}>{stop.stops[0].route_long_name.split("-")[0].trim()} {stopsPair == idx ? chosenDirection == "right" ? <FontAwesomeIcon icon={faArrowRight} /> : <FontAwesomeIcon icon={faArrowLeft} /> : <FontAwesomeIcon icon={faArrowsLeftRight} />} {stop.stops[0].route_long_name.split("-")[2].trim()}</button>))}
+                        <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Godizny odjazdów:</h2>
+                        {stops.map((stop, idx) => (<button key={idx} className={`${stopsPair == idx ? "bg-accent-500" : "bg-[#7077A1]"} p-1 m-1 rounded text-white`} onClick={stopsPair == idx ? () => changeDirection(chosenDirection == "right" ? "left" : "right") : () => changeSelectedRoute(idx)}>{stop.stops[0].route_long_name.split(" - ")[0].trim()} {stopsPair == idx ? chosenDirection == "right" ? <FontAwesomeIcon icon={faArrowRight} /> : <FontAwesomeIcon icon={faArrowLeft} /> : <FontAwesomeIcon icon={faArrowsLeftRight} />} {stop.stops[0].route_long_name.split(" - ")[stop.stops[0].route_long_name.split(" - ").length - 1].replace("-" + chosenRoute, "")}</button>))}
                         <div className='flex flex-row overflow-x-auto'>
                             {slicedStops ? slicedStops.stops[["right", "left"].indexOf(chosenDirection)].trips.sort((a, b) => (calcTimeToSeconds(a.times[0].departure_time) - calcTimeToSeconds(b.times[0].departure_time))).map((el, idx) => (
                                 <div onClick={() => chooseTrip(el)} className='bg-accent-500 m-1 rounded-md cursor-pointer text-nowrap text-white' key={idx}>
@@ -110,6 +113,7 @@ function Stops() {
                     : null}
                 {chosenTrip ?
                     <div>
+                        <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Czasy odjazdu z kolejnych przystanków</h2>
                         {chosenTrip.times.map((el => (
                             <div key={el.id} className='bg-[#2D3250] p-1 m-1 rounded text-white'><p >{el.stop_sequence}: {el.departure_time} - <button onClick={() => getStopRoutes(el.stop.stop_name)}>{el.stop.stop_name}</button>{stopRoutes && chosenStop == el.stop.stop_name ? stopRoutes.map((cr) => <button key={cr.id} onClick={() => getStops(cr.route_short_name)} className='bg-[#EC8432] p-1 m-1 rounded text-white'>{cr.route_short_name}</button>) : null}</p></div>
                         )))}
