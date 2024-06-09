@@ -26,7 +26,7 @@ const getDescription = (track) => {
 
     track.reverse().forEach(step => {
         if (desc.filter(item => item.name == step.route_short_name).length == 0) {
-            desc.push({name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time)})
+            desc.push({ name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time) })
         }
     });
     return desc;
@@ -90,7 +90,7 @@ function MainScreen() {
                             <button
                                 className="shadow bg-green-500 p-1 px-2 rounded text-white"
                                 onClick={searchTrip}
-                                // disabled={!firstStop && !secondStop}
+                            // disabled={!firstStop && !secondStop}
                             >
                                 Szukaj
                             </button>
@@ -99,7 +99,7 @@ function MainScreen() {
                 </nav>
             </header>
             <div className="fixed w-[90%] flex top-[70px] gap-1 z-30 overflow-y-scroll left-[5%]">
-                {data ? data.trips.sort((a,b) => calcTimeToSeconds(a[0].departure_time) - calcTimeToSeconds(b[0].departure_time)).map((track, j) => (
+                {data ? data.trips.sort((a, b) => calcTimeToSeconds(a[0].departure_time) - calcTimeToSeconds(b[0].departure_time)).map((track, j) => (
                     <p className="bg-white p-2 cursor-pointer" key={j} onClick={() => handleRouteSelection(track)}>
                         {parseTime(track[0].departure_time)}
                     </p>
@@ -135,8 +135,8 @@ function MainScreen() {
                 scrollWheelZoom={false}
             >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                { location ? <Marker position={location}></Marker> : null }
-                { selectedRoute ? selectedRoute.map((stop, j) => (
+                {location ? <Marker position={location}></Marker> : null}
+                {selectedRoute ? selectedRoute.map((stop, j) => (
                     <>
                         <Marker
                             key={`${j}`}
@@ -165,6 +165,7 @@ function MainScreen() {
                 )) : null}
                 <MapSetter zoom={zoom} center={center} />
             </MapContainer>
+            {/* {cmDisplayed ? <CarManager displayCM={changeCMDisplay} /> : null} */}
         </div>
     );
 }
