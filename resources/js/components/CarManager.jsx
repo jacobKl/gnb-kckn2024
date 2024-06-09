@@ -10,7 +10,6 @@ function CarManager({ setCMActive }) {
             document.getElementById("displacement").value = JSON.parse(localStorage.getItem("user_car")).displacement
             document.getElementById("consumption").value = JSON.parse(localStorage.getItem("user_car")).consumption
         }
-
     })
 
     const saveCarInfo = (e) => {

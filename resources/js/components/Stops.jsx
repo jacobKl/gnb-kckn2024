@@ -66,10 +66,9 @@ function Stops() {
 
     if (isLoading) return 'Loading...';
 
-    console.log(data);
 
     return (
-        <div className='stopy bg-primary-500'>
+        <div className='stopy bg-primary-500 p-3'>
             <div className='bg-primary-500'>
 
                 <div className=''>
@@ -93,7 +92,7 @@ function Stops() {
                 </div>
                 {stops ?
                     <div>
-                        <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Godizny odjazdów:</h2>
+                        <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Godziny odjazdów:</h2>
                         {stops.map((stop, idx) => (<button key={idx} className={`${stopsPair == idx ? "bg-accent-500" : "bg-[#7077A1]"} p-1 m-1 rounded text-white`} onClick={stopsPair == idx ? () => changeDirection(chosenDirection == "right" ? "left" : "right") : () => changeSelectedRoute(idx)}>{stop.stops[0].route_long_name.split(" - ")[0].trim()} {stopsPair == idx ? chosenDirection == "right" ? <FontAwesomeIcon icon={faArrowRight} /> : <FontAwesomeIcon icon={faArrowLeft} /> : <FontAwesomeIcon icon={faArrowsLeftRight} />} {stop.stops[0].route_long_name.split(" - ")[stop.stops[0].route_long_name.split(" - ").length - 1].replace("-" + chosenRoute, "")}</button>))}
                         <div className='flex flex-row overflow-x-auto'>
                             {slicedStops ? slicedStops.stops[["right", "left"].indexOf(chosenDirection)].trips.sort((a, b) => (calcTimeToSeconds(a.times[0].departure_time) - calcTimeToSeconds(b.times[0].departure_time))).map((el, idx) => (
