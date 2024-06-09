@@ -65,3 +65,24 @@
     pointer-events: none;
 
 }
+
+@media(max-width: 700px) {
+    .carmanager-button {
+        bottom: 80px;
+    }
+
+    .screen-nav {
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
+        z-index: 4333
+    }
+
+    .routing-form {
+        flex-direction: column;
+    }
+
+    .routing-form-wrapper {
+        flex-direction: column;
+    }
+}

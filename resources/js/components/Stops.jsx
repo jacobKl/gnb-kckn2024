@@ -75,7 +75,7 @@ function Stops() {
             <div className='bg-primary-500'>
 
                 <div className=''>
-                    <h2 className='bg-primary-100 m-1 p-2 text-white rounded-md'>Wybierz linię:</h2>
+                    <h2 className='bg-primary-100 m-1 p-2 text-white rounded-md'>{chosenRoute ? `Linia ${chosenRoute}:` : "Wybierz linię:"}</h2>
                     {data.sort(
                         (a, b) => (a.route_short_name > b.route_short_name ? 1 : -1))
                         .reduce((acc, current) => {

@@ -34,7 +34,7 @@ export const createFontAwesomeMarkerIcon = (type) => {
                 html: ReactDOMServer.renderToString(<FontAwesomeIcon icon={faMapPin} size="3x" />),
                 className: 'text-primary-500',
                 iconSize: [32, 32],
-                iconAnchor: [15, 36]
+                iconAnchor: [12, 36]
             });
     }
 };

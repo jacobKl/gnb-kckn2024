@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
     MapContainer,
     TileLayer,
@@ -7,12 +7,12 @@ import {
     useMap,
     Polyline,
 } from "react-leaflet";
-import {useUserLocation} from "./../hooks/useUserLocation";
-import {useQuery} from "react-query";
+import { useUserLocation } from "./../hooks/useUserLocation";
+import { useQuery } from "react-query";
 import DebounceAutocompleteInput from "./../components/DebounceAutocompleteInput";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMap, faXmark} from "@fortawesome/free-solid-svg-icons";
-import MapSetter, {createFontAwesomeMarkerIcon} from "../components/MapSetter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMap, faXmark, faLeaf, faTree } from "@fortawesome/free-solid-svg-icons";
+import MapSetter, { createFontAwesomeMarkerIcon } from "../components/MapSetter";
 import Loader from "../components/Loader";
 
 const parseTime = (time) => {
@@ -25,7 +25,7 @@ const getDescription = (track) => {
 
     [...track].reverse().forEach(step => {
         if (desc.filter(item => item.name == step.route_short_name).length == 0) {
-            desc.push({name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time)})
+            desc.push({ name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time) })
         }
     });
     return desc.reverse();
@@ -34,16 +34,16 @@ const getDescription = (track) => {
 function MainScreen() {
     const [location] = useUserLocation();
 
-    const [ selectedRoute, setSelectedRoute] = useState();
+    const [selectedRoute, setSelectedRoute] = useState();
     const [firstStop, setFirstStop] = useState();
     const [secondStop, setSecondStop] = useState();
     const [tripSearched, setTripSearched] = useState(false);
     const [zoom, setZoom] = useState(12);
-    const [center, setCenter] = useState({lat: 50.049683, lng: 19.944544});
+    const [center, setCenter] = useState({ lat: 50.049683, lng: 19.944544 });
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState([]);
 
-    const {isLoading, error, data, refetch} = useQuery({
+    const { isLoading, error, data, refetch } = useQuery({
         queryKey: ["routeData"],
         queryFn: () =>
             fetch(`/api/find-route?start_stop_id=${firstStop.stop_id}&end_stop_id=${secondStop.stop_id}`).then(
@@ -57,7 +57,7 @@ function MainScreen() {
     useEffect(() => {
         if (selectedRoute) {
             setZoom(13);
-            setCenter({lat: selectedRoute[0].stop_lat, lng: selectedRoute[0].stop_lon});
+            setCenter({ lat: selectedRoute[0].stop_lat, lng: selectedRoute[0].stop_lon });
         }
     }, [selectedRoute])
 
@@ -86,17 +86,17 @@ function MainScreen() {
         setTripSearched(true);
     };
 
-    if (isLoading) return <Loader/>;
+    if (isLoading) return <Loader />;
 
     return (
         <div className="main">
             <header className="z-30 relative">
-                <nav className="bg-primary-500 p-2 border-gray-200 px-4 lg:px-6 py-2.5">
-                    <div className="flex flex-wrap justify-between gap-4 items-center mx-auto max-w-screen-xl">
+                <nav className="topnav bg-primary-500 p-2 border-gray-200 px-4 lg:px-6 py-2.5">
+                    <div className="routing-form-wrapper flex flex-wrap justify-between gap-4 items-center mx-auto max-w-screen-xl">
                         <div className="text-lg text-white font-bold">
                             TRASOWNICZEK
                         </div>
-                        <div className="flex gap-2">
+                        <div className="routing-form flex gap-2">
                             <DebounceAutocompleteInput
                                 setTripSearched={setTripSearched}
                                 setSelected={setFirstStop}
@@ -145,11 +145,12 @@ function MainScreen() {
                 </a>
             ) : null}
             <MapContainer
+                className="mapcontainer"
                 center={[50.049683, 19.944544]}
                 zoom={12}
                 scrollWheelZoom={false}
             >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 {location ? <Marker position={location} icon={createFontAwesomeMarkerIcon("position")}></Marker> : null}
                 {selectedRoute ? selectedRoute.map((stop, j) => (
                     <>
@@ -178,7 +179,7 @@ function MainScreen() {
                         ) : null}
                     </>
                 )) : null}
-                <MapSetter zoom={zoom} center={center}/>
+                <MapSetter zoom={zoom} center={center} />
             </MapContainer>
             {showModal && (
                 <div className='carmanager bg-primary-500 rounded-3xl text-white flex justify-end flex-col min-w-96'>
@@ -187,7 +188,8 @@ function MainScreen() {
                         <button className='rounded-full flex justify-center items-center bg-primary-100 w-10 h-10 aspect-ratio-1' onClick={() => setShowModal(false)}><FontAwesomeIcon size="2x" icon={faXmark} /></button>
                     </div>
                     <div className='bg-primary-300 rounded-3xl p-8 text-center'>
-                        <p>Wybór transportu publicznego zamiast samochodu zaoszczędził na tej trasie: <br/> {modalData.calculatedEmissionDiff.toFixed(2)}g CO2</p>
+                        <p>Wybór transportu publicznego zamiast samochodu zaoszczędził na tej trasie: <br /> {modalData.calculatedEmissionDiff.toFixed(2)}g CO2</p>
+                        <div className="text-green-500"><FontAwesomeIcon icon={faLeaf} /><FontAwesomeIcon icon={faTree} /></div>
                     </div>
                 </div>
             )}
