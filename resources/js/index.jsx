@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
-import App from './App'
+import App from './app'
 import {
     QueryClient,
     QueryClientProvider,
-  } from 'react-query'
+} from 'react-query'
 
 
 const queryClient = new QueryClient()
