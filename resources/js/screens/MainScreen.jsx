@@ -29,7 +29,7 @@ const getDescription = (track) => {
             desc.push({name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time)})
         }
     });
-    return desc;
+    return desc.reverse();
 }
 
 function MainScreen() {
@@ -45,7 +45,7 @@ function MainScreen() {
     const {isLoading, error, data, refetch} = useQuery({
         queryKey: ["routeData"],
         queryFn: () =>
-            fetch(`/api/find-route?start_stop_id=2388&end_stop_id=1271`).then(
+            fetch(`/api/find-route?start_stop_id=${firstStop.stop_id}&end_stop_id=${secondStop.stop_id}`).then(
                 (res) => res.json()
             ),
         enabled: false,
@@ -110,7 +110,7 @@ function MainScreen() {
                             <button
                                 className="shadow bg-accent-500 p-1 px-3 rounded-full text-white"
                                 onClick={searchTrip}
-                                // disabled={!firstStop && !secondStop}
+                                disabled={!firstStop && !secondStop}
                             >
                                 Szukaj
                             </button>
@@ -118,13 +118,13 @@ function MainScreen() {
                     </div>
                 </nav>
             </header>
-            <div className="fixed w-[90%] flex top-[70px] gap-1 z-30 overflow-y-scroll left-[5%]">
-                {data ? data.trips.sort((a, b) => calcTimeToSeconds(a.departure_time) - calcTimeToSeconds(b.departure_time)).map((track, j) => (
+            {/* <div className="fixed w-[90%] flex top-[70px] gap-1 z-30 overflow-y-scroll left-[5%]"> */}
+                {/* {data ? data.trips.sort((a, b) => calcTimeToSeconds(a.departure_time) - calcTimeToSeconds(b.departure_time)).map((track, j) => (
                     <p className="bg-white p-2 cursor-pointer" key={j} onClick={() => handleRouteSelection(data.trips)}>
                         {parseTime(track.departure_time)}
                     </p>
-                )) : null}
-            </div>
+                )) : null} */}
+            {/* </div> */}
             {
                 selectedRoute ? (
                     <div className="fixed w-full bottom-[70px] bg-white z-40 flex p-1 gap-2">
@@ -141,7 +141,7 @@ function MainScreen() {
                     </div>
                 ) : null
             }
-            {/* {tripSearched ? (
+            {tripSearched ? (
                 <a
                     target="_blank"
                     className="fixed bottom-20 z-30  bg-white right-4 rounded shadow p-3"
@@ -149,7 +149,7 @@ function MainScreen() {
                 >
                     <FontAwesomeIcon icon={faMap} />
                 </a>
-            ) : null} */}
+            ) : null}
             <MapContainer
                 center={[50.049683, 19.944544]}
                 zoom={12}
@@ -187,7 +187,6 @@ function MainScreen() {
                 )) : null}
                 <MapSetter zoom={zoom} center={center}/>
             </MapContainer>
-            {/* {cmDisplayed ? <CarManager displayCM={changeCMDisplay} /> : null} */}
         </div>
     );
 }

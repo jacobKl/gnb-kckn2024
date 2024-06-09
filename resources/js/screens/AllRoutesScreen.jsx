@@ -3,8 +3,11 @@ import { useQuery } from "react-query";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import SingleRoute from "../components/SingleRoute";
 import Loader from "../components/Loader";
+import MapSetter from "../components/MapSetter";
 
 function AllRoutesScreen() {
+    const [zoom, setZoom] = useState(9);
+    const [center, setCenter] = useState({lat: 50.049683, lng: 19.944544});
     const [selectedRoute, setSelectedRoute] = useState(null);
     const { isLoading, error, data } = useQuery({
         queryKey: ["bigMapData"],
@@ -18,11 +21,19 @@ function AllRoutesScreen() {
     const handleClick = (route) => {
         if (!selectedRoute) {
             setSelectedRoute(route);
+            setZoom(13);
+            setCenter({lat: route.stops[0].stop_lat, lng: route.stops[0].stop_lon});
             return;
         }
 
-        if (route.id == selectedRoute.id) setSelectedRoute(null);
-        else setSelectedRoute(route);
+        if (route.id == selectedRoute.id) {
+            setZoom(9);
+            setCenter({lat: 50.049683, lng: 19.944544});
+        } else {
+            setSelectedRoute(route);
+            setZoom(13);
+            setCenter({lat: route.stops[0].stop_lat, lng: route.stops[0].stop_lon});
+        }
     };
 
 
@@ -70,6 +81,7 @@ function AllRoutesScreen() {
                             <SingleRoute key={j} route={route}></SingleRoute>
                         ))
                     )}
+                    <MapSetter zoom={zoom} center={center} />
                 </MapContainer>
             </div>
         </div>
