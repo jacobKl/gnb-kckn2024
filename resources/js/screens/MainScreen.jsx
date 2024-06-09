@@ -21,6 +21,17 @@ const parseTime = (time) => {
     return `${parseInt(part[0]) % 24}:${part[1]}`;
 }
 
+const getDescription = (track) => {
+    const desc = [];
+
+    track.reverse().forEach(step => {
+        if (desc.filter(item => item.name == step.route_short_name).length == 0) {
+            desc.push({name: step.route_short_name, stop: step.stop_name, arrive: parseTime(step.arrival_time)})
+        }
+    });
+    return desc;
+}
+
 function MainScreen() {
     const [location] = useUserLocation();
     const [selectedRoute, setSelectedRoute] = useState(null);
@@ -34,7 +45,7 @@ function MainScreen() {
     const { isLoading, error, data, refetch } = useQuery({
         queryKey: ["routeData"],
         queryFn: () =>
-            fetch(`/api/find-route?start_stop_id=${firstStop.stop_id}&end_stop_id=${firstStop.stop_id}`).then(
+            fetch(`/api/find-route?start_stop_id=2388&end_stop_id=1271`).then(
                 (res) => res.json()
             ),
         enabled: false,
@@ -59,9 +70,9 @@ function MainScreen() {
     return (
         <div className="main">
             <header className="z-30 relative">
-                <nav className="bg-white p-2 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+                <nav className="bg-white p-2 border-gray-200 px-4 lg:px-6 py-2.5">
                     <div className="flex flex-wrap justify-between gap-4 items-center mx-auto max-w-screen-xl">
-                        <div className="text-lg font-bold text-white">
+                        <div className="text-lg font-bold">
                             TRASOWNICZEK
                         </div>
                         <div className="flex gap-2">
@@ -94,7 +105,22 @@ function MainScreen() {
                     </p>
                 )) : null}
             </div>
-            {tripSearched ? (
+            {
+                selectedRoute ? (
+                    <div className="fixed w-full bottom-[70px] bg-white z-40 flex p-1 gap-2">
+                        {getDescription(selectedRoute).map(step => (
+                            <div className="flex items-center">
+                                <div className="text-bold border w-[50px] h-[50px] flex items-center justify-center">{step.name}</div>
+                                <div className="ps-2">
+                                    <div className="text-sm">{step.stop}</div>
+                                    <div className="text-sm text-gray-500">{step.arrive}</div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : null
+            }
+            {/* {tripSearched ? (
                 <a
                     target="_blank"
                     className="fixed bottom-20 z-30  bg-white right-4 rounded shadow p-3"
@@ -102,7 +128,7 @@ function MainScreen() {
                 >
                     <FontAwesomeIcon icon={faMap} />
                 </a>
-            ) : null}
+            ) : null} */}
             <MapContainer
                 center={[50.049683, 19.944544]}
                 zoom={12}
