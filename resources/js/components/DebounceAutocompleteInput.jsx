@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getStopsByPrefix } from "../utils/api";
 
-function DebounceAutocompleteInput({ setSelected, setTripSearched }) {
+function DebounceAutocompleteInput({ setSelected, setTripSearched, disabled }) {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [matchedLocations, setMatchedLocations] = useState("");
     const [finished, setFinished] = useState(false);
@@ -38,6 +38,7 @@ function DebounceAutocompleteInput({ setSelected, setTripSearched }) {
                     placeholder="Lokalizacja"
                     value={searchPhrase}
                     onInput={(e) => handleSearchInput(e)}
+                    disabled={disabled}
                 />
                 {(matchedLocations && !finished) ? (
                     <ol className="absolute top-100 w-full shadow max-input-height overflow-scroll">
