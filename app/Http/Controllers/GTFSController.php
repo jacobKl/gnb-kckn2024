@@ -174,7 +174,7 @@ class GTFSController extends Controller
         $startStopId = request('start_stop_id');
         $endStopId = request('end_stop_id');
 
-        $connection =  $this->routeService->findRoute($startStopId, $endStopId);
+        $connection = $this->routeService->findRoute($startStopId, $endStopId);
 
         return response()->json($connection);
 
@@ -225,6 +225,21 @@ class GTFSController extends Controller
         );
 
         $emission = $this->emissionModelService->estimateEmission($request->post('engineCapacity'), $request->post('fuelConsumption'));
+
+        return response()->json([
+            'distance' => $distance,
+            'emission' => $emission,
+            'calculatedEmission' => $distance * $emission / 1000
+        ]);
+    }
+
+    public function zdobądźObliczonąEmisjeDwutlenkuWęgla(Request $request): JsonResponse
+    {
+        $distance = $this->emissionModelService->haversineGreatCircleDistance(
+            $request->post('latitudeFrom'), $request->post('longitudeFrom'), $request->post('latitudeTo'), $request->post('longitudeTo')
+        );
+
+        $emission = 25;
 
         return response()->json([
             'distance' => $distance,
