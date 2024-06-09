@@ -225,11 +225,20 @@ class GTFSController extends Controller
         );
 
         $emission = $this->emissionModelService->estimateEmission($request->post('engineCapacity'), $request->post('fuelConsumption'));
+        $emissionBus = 25;
+
+        $calculatedEmission = $distance * $emission / 1000;
+        $calculatedEmissionBus = $distance * $emissionBus / 1000;
+
+        $calculatedEmissionDiff = $calculatedEmission - $calculatedEmissionBus;
 
         return response()->json([
             'distance' => $distance,
             'emission' => $emission,
-            'calculatedEmission' => $distance * $emission / 1000
+            'calculatedEmission' => $distance * $emission / 1000,
+            'emissionBus' => $emissionBus,
+            'calculatedEmissionBus' => $distance * $emissionBus / 1000,
+            'calculatedEmissionDiff' => $calculatedEmissionDiff
         ]);
     }
 
