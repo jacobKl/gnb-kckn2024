@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
-import { faRoute, faArrowDown, faArrowRight, faArrowLeft, faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, {useState} from 'react';
+import {useQuery} from 'react-query';
+import {faRoute, faArrowDown, faArrowRight, faArrowLeft, faArrowsLeftRight} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 
 export const calcTimeToSeconds = (h) => {
     let hSplitted = h.split(":")
@@ -18,7 +18,7 @@ function Stops() {
     const [stopsPair, setStopsPair] = useState(false);
     const [slicedStops, setSlicedStops] = useState(false);
 
-    const { isLoading, error, data } = useQuery({
+    const {isLoading, error, data} = useQuery({
         queryKey: ["routesData"],
         queryFn: () =>
             fetch("/api/routes").then((res) =>
@@ -31,10 +31,13 @@ function Stops() {
         let stopsResponse = await fetch("https://kckn24.ddev.site/api/get-stops-by-route-name/" + name).then(res => res.json());
         let higherDimensionStopsResponse = []
         for (let i = 0; i < stopsResponse.length; i += 2) {
-            higherDimensionStopsResponse.push({ stops: [], direction: "right" })
+            higherDimensionStopsResponse.push({stops: [], direction: "right"})
         }
         for (let i = 0; i < stopsResponse.length; i++) {
-            higherDimensionStopsResponse[i % (stopsResponse.length / 2)].stops.push(stopsResponse[i])
+            try {
+                higherDimensionStopsResponse[i % (stopsResponse.length / 2)].stops.push(stopsResponse[i])
+            } catch (e) {
+            }
         }
         console.log(higherDimensionStopsResponse);
 
@@ -82,26 +85,33 @@ function Stops() {
                             return acc;
                         }, [])
                         .map(route => (<button
-                            onClick={() => getStops(route.route_short_name)}
-                            className='bg-accent-500 p-1 m-1 rounded text-white'
-                            key={route.id}>
-                            {route.route_short_name}
-                        </button>)
+                                onClick={() => getStops(route.route_short_name)}
+                                className='bg-accent-500 p-1 m-1 rounded text-white'
+                                key={route.id}>
+                                {route.route_short_name}
+                            </button>)
                         )
                     }
                 </div>
                 {stops ?
                     <div>
                         <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Godziny odjazdów:</h2>
-                        {stops.map((stop, idx) => (<button key={idx} className={`${stopsPair == idx ? "bg-accent-500" : "bg-[#7077A1]"} p-1 m-1 rounded text-white`} onClick={stopsPair == idx ? () => changeDirection(chosenDirection == "right" ? "left" : "right") : () => changeSelectedRoute(idx)}>{stop.stops[0].route_long_name.split(" - ")[0].trim()} {stopsPair == idx ? chosenDirection == "right" ? <FontAwesomeIcon icon={faArrowRight} /> : <FontAwesomeIcon icon={faArrowLeft} /> : <FontAwesomeIcon icon={faArrowsLeftRight} />} {stop.stops[0].route_long_name.split(" - ")[stop.stops[0].route_long_name.split(" - ").length - 1].replace("-" + chosenRoute, "")}</button>))}
+                        {stops.map((stop, idx) => (<button key={idx}
+                                                           className={`${stopsPair == idx ? "bg-accent-500" : "bg-[#7077A1]"} p-1 m-1 rounded text-white`}
+                                                           onClick={stopsPair == idx ? () => changeDirection(chosenDirection == "right" ? "left" : "right") : () => changeSelectedRoute(idx)}>{stop.stops[0].route_long_name.split(" - ")[0].trim()} {stopsPair == idx ? chosenDirection == "right" ?
+                                <FontAwesomeIcon icon={faArrowRight}/> : <FontAwesomeIcon icon={faArrowLeft}/> :
+                            <FontAwesomeIcon
+                                icon={faArrowsLeftRight}/>} {stop.stops[0].route_long_name.split(" - ")[stop.stops[0].route_long_name.split(" - ").length - 1].replace("-" + chosenRoute, "")}</button>))}
                         <div className='flex flex-row overflow-x-auto'>
                             {slicedStops ? slicedStops.stops[["right", "left"].indexOf(chosenDirection)].trips.sort((a, b) => (calcTimeToSeconds(a.times[0].departure_time) - calcTimeToSeconds(b.times[0].departure_time))).map((el, idx) => (
-                                <div onClick={() => chooseTrip(el)} className='bg-accent-500 m-1 rounded-md cursor-pointer text-nowrap text-white' key={idx}>
-                                    <FontAwesomeIcon className='w-full my-4' size="3x" icon={faRoute} />
+                                <div onClick={() => chooseTrip(el)}
+                                     className='bg-accent-500 m-1 rounded-md cursor-pointer text-nowrap text-white'
+                                     key={idx}>
+                                    <FontAwesomeIcon className='w-full my-4' size="3x" icon={faRoute}/>
                                     <div className='bg-accent-300 rounded-md p-2'>
                                         <p>Odjazd {el.times[0].departure_time}</p>
                                         <p className='font-semibold'>{el.times[0].stop.stop_name}</p>
-                                        <FontAwesomeIcon className='my-2' icon={faArrowDown} />
+                                        <FontAwesomeIcon className='my-2' icon={faArrowDown}/>
                                         <p>Przyjazd {el.times[el.times.length - 1].arrival_time}</p>
                                         <p className='font-semibold'>{el.times[el.times.length - 1].stop.stop_name}</p>
                                     </div>
@@ -112,9 +122,16 @@ function Stops() {
                     : null}
                 {chosenTrip ?
                     <div>
-                        <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Czasy odjazdu z kolejnych przystanków</h2>
+                        <h2 className='bg-primary-100 p-2 m-1 text-white rounded-md'>Czasy odjazdu z kolejnych
+                            przystanków</h2>
                         {chosenTrip.times.map((el => (
-                            <div key={el.id} className='bg-[#2D3250] p-1 m-1 rounded text-white'><p >{el.stop_sequence}: {el.departure_time} - <button onClick={() => getStopRoutes(el.stop.stop_name)}>{el.stop.stop_name}</button>{stopRoutes && chosenStop == el.stop.stop_name ? stopRoutes.map((cr) => <button key={cr.id} onClick={() => getStops(cr.route_short_name)} className='bg-[#EC8432] p-1 m-1 rounded text-white'>{cr.route_short_name}</button>) : null}</p></div>
+                            <div key={el.id} className='bg-[#2D3250] p-1 m-1 rounded text-white'>
+                                <p>{el.stop_sequence}: {el.departure_time} - <button
+                                    onClick={() => getStopRoutes(el.stop.stop_name)}>{el.stop.stop_name}</button>{stopRoutes && chosenStop == el.stop.stop_name ? stopRoutes.map((cr) =>
+                                    <button key={cr.id} onClick={() => getStops(cr.route_short_name)}
+                                            className='bg-[#EC8432] p-1 m-1 rounded text-white'>{cr.route_short_name}</button>) : null}
+                                </p>
+                            </div>
                         )))}
                     </div>
                     :
