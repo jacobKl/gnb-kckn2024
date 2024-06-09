@@ -1,6 +1,5 @@
 import React from "react";
 import { Polyline } from 'react-leaflet'
-import { useQuery } from 'react-query'
 
 
 function SingleRoute({ route }) {

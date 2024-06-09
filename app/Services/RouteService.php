@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Routes;
 use App\Models\Stop;
 use App\Models\StopTime;
+use App\Models\Trips;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as IlluminateCollection;
 
@@ -37,6 +38,18 @@ class RouteService
 
         foreach ($stops as $stop) {
             $stopsMap[$stop->stop_id] = $stop;
+        }
+
+        $trips = Trips::all();
+        $tripsMap = [];
+        foreach ($trips as $trip) {
+            $tripsMap[$trip->trip_id] = $trip;
+        }
+
+        $routes = Routes::all();
+        $routesMap = [];
+        foreach ($routes as $route) {
+            $routesMap[$route->route_id] = $route;
         }
 
         //get all trips which have stop starts
@@ -72,10 +85,11 @@ class RouteService
                             return $stopTime->stop_sequence >= $startStop->stop_sequence && $stopTime->stop_sequence <= $endStop->stop_sequence;
                         })
                         ->values()
-                        ->map(function (StopTime $stopTime) use ($stopsMap) {
+                        ->map(function (StopTime $stopTime) use ($stopsMap, $routesMap, $tripsMap) {
                             return [...$stopTime->toArray(), "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
                                 "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
-                                "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
+                                "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon,
+                                "route_short_name" => $routesMap[$tripsMap[$stopTime->trip_id]->route_id]->route_short_name];
                         })
 
                     );
@@ -113,7 +127,7 @@ class RouteService
                     foreach ($intersection as $intersectionId)
                         $currentlyChecked = $endStops->filter(fn(StopTime $stopTime) => $stopTime->stop_id == $intersectionId)->first();
                     if ($currentlyChecked->stop_sequence < $destination->stop_sequence) {
-                            $connection[] = $this->mergeStops($startStops, $endStops, $intersectionId, $startStopId, $endStopId);
+                        $connection[] = $this->mergeStops($startStops, $endStops, $intersectionId, $startStopId, $endStopId);
                         break;
                     }
                 }
@@ -135,6 +149,19 @@ class RouteService
         foreach ($stops as $stop) {
             $stopsMap[$stop->stop_id] = $stop;
         }
+
+        $trips = Trips::all();
+        $tripsMap = [];
+        foreach ($trips as $trip) {
+            $tripsMap[$trip->trip_id] = $trip;
+        }
+
+        $routes = Routes::all();
+        $routesMap = [];
+        foreach ($routes as $route) {
+            $routesMap[$route->route_id] = $route;
+        }
+
 
         $startStop = $startStops->filter(function (StopTime $stopTime) use ($startStopId) {
             return $stopTime->stop_id == $startStopId;
@@ -162,11 +189,12 @@ class RouteService
 
         $mergedTrip = $filteredStartStops->merge($filteredEndStops);
 
-        return $mergedTrip->map(function (StopTime $stopTime) use ($stopsMap, $intersectionStopFromStart,$intersectionStopFromEnd) {
+        return $mergedTrip->map(function (StopTime $stopTime) use ($stopsMap, $intersectionStopFromStart, $intersectionStopFromEnd, $routesMap, $tripsMap) {
             return [...$stopTime->toArray(),
                 "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
                 "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
                 "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon,
+                "route_short_name" => $routesMap[$tripsMap[$stopTime->trip_id]->route_id]->route_short_name,
                 //set all stations to is intersection is route is for endStops
                 "is_intersection" => $stopTime === $intersectionStopFromStart || $stopTime->trip_id == $intersectionStopFromEnd->trip_id];
         });
