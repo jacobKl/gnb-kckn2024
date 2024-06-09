@@ -70,6 +70,7 @@ class RouteService
                         ->filter(function (StopTime $stopTime) use ($startStop, $endStop) {
                             return $stopTime->stop_sequence >= $startStop->stop_sequence && $stopTime->stop_sequence <= $endStop->stop_sequence;
                         })
+                        ->values()
                         ->map(function (StopTime $stopTime) use ($stopsMap) {
                         return [...$stopTime->toArray(), "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
                             "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
