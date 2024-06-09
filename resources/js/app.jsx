@@ -13,6 +13,8 @@ export default function () {
                 return <MainScreen />
             case 1:
                 return <AllRoutesScreen />
+            case 2:
+                return <Stops />
             default:
                 return <MainScreen />
         }
@@ -22,7 +24,6 @@ export default function () {
         <>
             {render(screen)}
             <ScreenNav setScreen={setScreen} screen={screen} />
-            <Stops></Stops>
         </>
     )
 }

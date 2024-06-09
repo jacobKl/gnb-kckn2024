@@ -68,9 +68,9 @@ function Stops() {
     console.log(data);
 
     return (
-        <div>
-            <div className='bg-[#424769]'>
-
+        <div className='stopy bg-[#424769]'>
+            <div className='bg-[#424769] text-white'>
+                <h2 className='p-2 bg-[#7077A1] rounded m-1'>Wybierz linię:</h2>
                 <div className=''>
                     {data.sort(
                         (a, b) => (a.route_short_name > b.route_short_name ? 1 : -1))
@@ -91,6 +91,7 @@ function Stops() {
                 </div>
                 {stops ?
                     <div>
+                        <h2 className='p-2 bg-[#7077A1] rounded m-1'>Godziny przejazdów - kliknij, aby poznać szczegóły: </h2>
                         {stops.map((stop, idx) => (<button key={idx} className={`${stopsPair == idx ? "bg-[#EC8432]" : "bg-[#7077A1]"} p-1 m-1 rounded text-white`} onClick={stopsPair == idx ? () => changeDirection(chosenDirection == "right" ? "left" : "right") : () => changeSelectedRoute(idx)}>{stop.stops[0].route_long_name.split("-")[0].trim()} {stopsPair == idx ? chosenDirection == "right" ? <FontAwesomeIcon icon={faArrowRight} /> : <FontAwesomeIcon icon={faArrowLeft} /> : <FontAwesomeIcon icon={faArrowsLeftRight} />} {stop.stops[0].route_long_name.split("-")[2].trim()}</button>))}
                         <div className='flex flex-row overflow-x-auto'>
                             {slicedStops ? slicedStops.stops[["right", "left"].indexOf(chosenDirection)].trips.sort((a, b) => (calcTimeToSeconds(a.times[0].departure_time) - calcTimeToSeconds(b.times[0].departure_time))).map((el, idx) => (
@@ -110,6 +111,7 @@ function Stops() {
                     : null}
                 {chosenTrip ?
                     <div>
+                        <h2 className='p-2 bg-[#7077A1] rounded m-1'>Rozkład jazdy:</h2>
                         {chosenTrip.times.map((el => (
                             <div key={el.id} className='bg-[#2D3250] p-1 m-1 rounded text-white'><p >{el.stop_sequence}: {el.departure_time} - <button onClick={() => getStopRoutes(el.stop.stop_name)}>{el.stop.stop_name}</button>{stopRoutes && chosenStop == el.stop.stop_name ? stopRoutes.map((cr) => <button key={cr.id} onClick={() => getStops(cr.route_short_name)} className='bg-[#EC8432] p-1 m-1 rounded text-white'>{cr.route_short_name}</button>) : null}</p></div>
                         )))}

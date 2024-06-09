@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState } from "react";
 import {
     MapContainer,
@@ -129,6 +130,23 @@ function MainScreen() {
                     <FontAwesomeIcon icon={faMap} />
                 </a>
             ) : null} */}
+=======
+import React from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import Header from "../components/Header";
+import { useUserLocation } from './../hooks/useUserLocation'
+import CarManager from "../components/CarManager";
+import { useState } from "react";
+
+function MainScreen() {
+    const [location, error] = useUserLocation();
+
+    const [cmDisplayed, changeCMDisplay] = useState(false);
+
+    return (
+        <div className="main">
+            <Header displayCM={changeCMDisplay} />
+>>>>>>> Stashed changes
             <MapContainer
                 center={[50.049683, 19.944544]}
                 zoom={12}
@@ -165,6 +183,7 @@ function MainScreen() {
                 )) : null}
                 <MapSetter zoom={zoom} center={center} />
             </MapContainer>
+            {cmDisplayed ? <CarManager displayCM={changeCMDisplay} /> : null}
         </div>
     );
 }
