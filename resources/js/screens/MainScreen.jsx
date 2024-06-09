@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     MapContainer,
     TileLayer,
@@ -34,23 +34,33 @@ const getDescription = (track) => {
 
 function MainScreen() {
     const [location] = useUserLocation();
-    const [selectedRoute, setSelectedRoute] = useState(null);
 
+    const [ selectedRoute, setSelectedRoute] = useState();
     const [firstStop, setFirstStop] = useState();
     const [secondStop, setSecondStop] = useState();
     const [tripSearched, setTripSearched] = useState(false);
     const [zoom, setZoom] = useState(12);
     const [center, setCenter] = useState({lat: 50.049683, lng: 19.944544});
-    const [showModal, setShowModal] = useState(false); // Added state variable for modal visibility
+    const [showModal, setShowModal] = useState(false);
+    const [ modalData, setModalData ] = useState([]);
 
     const {isLoading, error, data, refetch} = useQuery({
         queryKey: ["routeData"],
         queryFn: () =>
             fetch(`/api/find-route?start_stop_id=${firstStop.stop_id}&end_stop_id=${secondStop.stop_id}`).then(
-                (res) => res.json()
+                (res) => res.json().then((res) => {
+                    setSelectedRoute(res.trips[0])
+                })
             ),
         enabled: false,
     });
+
+    useEffect(() => {
+        if (selectedRoute) {
+            setZoom(13);
+            setCenter({lat: selectedRoute[0].stop_lat, lng: selectedRoute[0].stop_lon});
+        }
+    }, [selectedRoute])
 
     const searchTrip = async () => {
         refetch();
@@ -71,23 +81,13 @@ function MainScreen() {
                     'Access-Control-Allow-Origin': '*'
                 }
             }).then(res => res.json())
-            console.log(emissionsResponse)
-            setShowModal(true); // Show the modal
+            setModalData(emissionsResponse);
+            setShowModal(true);
         }
         setTripSearched(true);
     };
 
     if (isLoading) return <Loader/>;
-
-    const handleRouteSelection = (track) => {
-        console.log(track)
-        setSelectedRoute(track);
-        setZoom(13);
-        setCenter({
-            lat: track[0].stop_lat,
-            lng: track[0].stop_lon
-        });
-    }
 
     return (
         <div className="main">
@@ -120,13 +120,6 @@ function MainScreen() {
                     </div>
                 </nav>
             </header>
-            {/* <div className="fixed w-[90%] flex top-[70px] gap-1 z-30 overflow-y-scroll left-[5%]"> */}
-                {/* {data ? data.trips.sort((a, b) => calcTimeToSeconds(a.departure_time) - calcTimeToSeconds(b.departure_time)).map((track, j) => (
-                    <p className="bg-white p-2 cursor-pointer" key={j} onClick={() => handleRouteSelection(data.trips)}>
-                        {parseTime(track.departure_time)}
-                    </p>
-                )) : null} */}
-            {/* </div> */}
             {
                 selectedRoute ? (
                     <div className="fixed w-full bottom-[70px] bg-white z-40 flex p-1 gap-2">
@@ -146,7 +139,7 @@ function MainScreen() {
             {tripSearched ? (
                 <a
                     target="_blank"
-                    className="fixed bottom-20 z-30  bg-white right-4 rounded shadow p-3"
+                    className="fixed bottom-[140px] z-30  bg-white right-4 rounded shadow p-3"
                     href={`https://www.google.com/maps/dir/?api=1&origin=${location.lat},${location.lon}&destination=${secondStop.stop_lat},${secondStop.stop_lon}&travelmode=driving`}
                 >
                     <FontAwesomeIcon icon={faMap} />
@@ -170,7 +163,6 @@ function MainScreen() {
                             }}
                         >
                             <Popup>{stop.stop_name}</Popup>
-                            <Polyline key={j} positions={[]}></Polyline>
                         </Marker>
                         {j < selectedRoute.length - 1 ? (
                             <Polyline
@@ -189,7 +181,7 @@ function MainScreen() {
                 )) : null}
                 <MapSetter zoom={zoom} center={center}/>
             </MapContainer>
-            {showModal && (
+            {/* {showModal && (
                 <div id="default-modal" tabIndex="-1" aria-hidden="true"
                      className="fixed inset-0 z-50 flex justify-center items-center w-full h-screen bg-black bg-opacity-50">
                     <div className="relative p-4 w-full max-w-2xl max-h-full">
@@ -246,7 +238,7 @@ function MainScreen() {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }
