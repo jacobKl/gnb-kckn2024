@@ -33,7 +33,7 @@ function DebounceAutocompleteInput({ setSelected, setTripSearched, disabled }) {
         <>
             <div className="relative">
                 <input
-                    className="bg-white p-1 border-none shadow appearance-none rounded"
+                    className="bg-primary-100 rounded-full text-white placeholder:text-primary-500 p-1 pl-2 border-none shadow appearance-none"
                     type="search"
                     placeholder="Lokalizacja"
                     value={searchPhrase}
