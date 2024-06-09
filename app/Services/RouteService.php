@@ -162,12 +162,13 @@ class RouteService
 
         $mergedTrip = $filteredStartStops->merge($filteredEndStops);
 
-        return $mergedTrip->map(function (StopTime $stopTime) use ($stopsMap, $intersectionStopFromStart) {
+        return $mergedTrip->map(function (StopTime $stopTime) use ($stopsMap, $intersectionStopFromStart,$intersectionStopFromEnd) {
             return [...$stopTime->toArray(),
                 "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
                 "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
                 "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon,
-                "is_intersection" => $stopTime === $intersectionStopFromStart];
+                //set all stations to is intersection is route is for endStops
+                "is_intersection" => $stopTime === $intersectionStopFromStart || $stopTime->trip_id == $intersectionStopFromEnd->trip_id];
         });
     }
 }
