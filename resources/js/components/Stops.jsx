@@ -3,6 +3,11 @@ import { useQuery } from 'react-query';
 import { faRoute, faArrowDown, faArrowRight, faArrowLeft, faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+export const calcTimeToSeconds = (h) => {
+    let hSplitted = h.split(":")
+    return parseInt(hSplitted[0]) * 3600 + parseInt(hSplitted[1]) * 60 + parseInt(hSplitted[2])
+}
+
 function Stops() {
     const [chosenRoute, chooseRoute] = useState(false);
     const [chosenDirection, changeDirection] = useState("right");
@@ -56,11 +61,6 @@ function Stops() {
     const changeSelectedRoute = (routeId) => {
         setSlicedStops(stops[routeId])
         setStopsPair(routeId);
-    }
-
-    const calcTimeToSeconds = (h) => {
-        let hSplitted = h.split(":")
-        return parseInt(hSplitted[0]) * 3600 + parseInt(hSplitted[1]) * 60 + parseInt(hSplitted[2])
     }
 
     if (isLoading) return 'Loading...';
