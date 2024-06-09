@@ -94,7 +94,7 @@ function MainScreen() {
                     </p>
                 )) : null}
             </div>
-            {/* {tripSearched ? (
+            {tripSearched ? (
                 <a
                     target="_blank"
                     className="fixed bottom-20 z-30  bg-white right-4 rounded shadow p-3"
@@ -102,7 +102,7 @@ function MainScreen() {
                 >
                     <FontAwesomeIcon icon={faMap} />
                 </a>
-            ) : null} */}
+            ) : null}
             <MapContainer
                 center={[50.049683, 19.944544]}
                 zoom={12}
