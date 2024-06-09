@@ -140,7 +140,7 @@ class RouteService
 
         return [
             'route' => 'change',
-            'trips' => $connection
+            'trips' => [$connection]
         ];
     }
 
