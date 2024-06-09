@@ -6,6 +6,7 @@ use App\Models\Routes;
 use App\Models\Stop;
 use App\Models\StopTime;
 use App\Models\Trips;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as IlluminateCollection;
 
@@ -95,10 +96,11 @@ class RouteService
                     );
                 }
             }
+
             if ($filteredDirectTrips->isNotEmpty()) {
                 return [
                     'route' => 'direct',
-                    'trips' => $filteredDirectTrips
+                    'trips' => $this->showViableConnections($filteredDirectTrips)->values()
                 ];
             }
         }
@@ -134,6 +136,7 @@ class RouteService
             }
         }
 
+        $connection = $this->getBestConnectionChange($connection);
 
         return [
             'route' => 'change',
@@ -199,4 +202,62 @@ class RouteService
                 "is_intersection" => $stopTime === $intersectionStopFromStart || $stopTime->trip_id == $intersectionStopFromEnd->trip_id];
         });
     }
+
+    public function getBestConnectionChange(array $connections): mixed
+    {
+        $bestConnection = null;
+        //arbitrary large diff in minutes
+        $bestMinutesDiff = 9999;
+        foreach ($connections as $connection) {
+            $collected = collect($connection);
+            $collected = $collected->filter(function (array $stopTime) {
+                return $stopTime["is_intersection"];
+            });
+
+            $intersectionStop = $collected->values()->first();
+            $nextStop = $collected->values()->get(1);
+
+            //setting locale time xd
+            $currentTime = Carbon::now()->addHours(2);
+
+            $intersectionArrivalTime = Carbon::createFromTimeString($intersectionStop["arrival_time"]);
+            $nextStopArrivalTime = Carbon::createFromTimeString($nextStop["arrival_time"]);
+
+            //if current time is greater than intersection, that means the arrival time is in the past, we need to add one day to
+            // make it future date
+            if ($currentTime->greaterThan($intersectionArrivalTime)) {
+                $intersectionArrivalTime->addDays(1);
+            }
+
+            if ($currentTime->greaterThan($nextStopArrivalTime)) {
+                $nextStopArrivalTime->addDays(1);
+            }
+
+            if ($bestMinutesDiff > $intersectionArrivalTime->diffInMinutes($nextStopArrivalTime) &&
+                $intersectionArrivalTime->lessThan($nextStopArrivalTime)) {
+                $bestConnection = $connection;
+                $bestMinutesDiff = $intersectionArrivalTime->diffInMinutes($nextStopArrivalTime);
+            }
+
+        }
+        return $bestConnection;
+    }
+
+    public function showViableConnections(IlluminateCollection $connections): IlluminateCollection
+    {
+        //setting locale time
+        $currentTime = Carbon::now()->addHours(2);
+        $viableConnections = collect();
+        foreach ($connections as $connection) {
+            $connectionTime = Carbon::createFromTimeString($connection->first()["arrival_time"]);
+            if ($currentTime->lessThan($connectionTime)) {
+                $viableConnections->push($connection);
+            }
+        }
+
+        return $viableConnections->sort(function (IlluminateCollection $connection) {
+            return Carbon::createFromTimeString($connection->first()["arrival_time"])->timestamp;
+        });
+    }
+
 }
