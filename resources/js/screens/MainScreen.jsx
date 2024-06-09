@@ -51,8 +51,28 @@ function MainScreen() {
         enabled: false,
     });
 
-    const searchTrip = () => {
+    const searchTrip = async () => {
         refetch();
+        if (localStorage.getItem("user_car") != null) {
+            let csrfToken = document.head.querySelector("[name~=csrf_token][content]").content;
+            let lscar = JSON.parse(localStorage.getItem("user_car"))
+            let emissionsResponse = await fetch("/api/get-calculated-emission", {
+                method: "POST",
+                body: JSON.stringify({
+                    latitudeFrom: firstStop.stop_lat,
+                    longitudeFrom: firstStop.stop_lon,
+                    latitudeTo: secondStop.stop_lat,
+                    longitudeTo: secondStop.stop_lon,
+                    engineCapacity: lscar.displacement,
+                    fuelConsumption: lscar.consumption
+                }),
+                headers: {
+                    'Content-Type': 'Application/Json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            }).then(res => res.json())
+            console.log(emissionsResponse)
+        }
         setTripSearched(true);
     };
 

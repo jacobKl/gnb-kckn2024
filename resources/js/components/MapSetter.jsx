@@ -10,28 +10,28 @@ export const createFontAwesomeMarkerIcon = (type) => {
     switch (type) {
         case "position":
             return L.divIcon({
-                html: ReactDOMServer.renderToString(<FontAwesomeIcon style="text-shadow: 4px 4px 10px rgba(66, 68, 90, 1);" icon={faLocationDot} size="3x" />),
+                html: ReactDOMServer.renderToString(<FontAwesomeIcon icon={faLocationDot} size="3x" />),
                 className: 'custom-icon',
                 iconSize: [32, 32], // Rozmiar ikony
                 iconAnchor: [15, 36]
             });
         case "start":
             return L.divIcon({
-                html: ReactDOMServer.renderToString(<FontAwesomeIcon style="text-shadow: 4px 4px 10px rgba(66, 68, 90, 1);" icon={faFlag} size="3x" />),
+                html: ReactDOMServer.renderToString(<FontAwesomeIcon icon={faFlag} size="3x" />),
                 className: 'text-red-500',
                 iconSize: [32, 32],
                 iconAnchor: [0, 36]
             });
         case "finish":
             return L.divIcon({
-                html: ReactDOMServer.renderToString(<FontAwesomeIcon style="text-shadow: 4px 4px 10px rgba(66, 68, 90, 1);" icon={faFlagCheckered} size="3x" />),
+                html: ReactDOMServer.renderToString(<FontAwesomeIcon icon={faFlagCheckered} size="3x" />),
                 className: 'text-blue-500',
                 iconSize: [32, 32],
                 iconAnchor: [0, 36]
             });
         case "stop":
             return L.divIcon({
-                html: ReactDOMServer.renderToString(<FontAwesomeIcon style="text-shadow: 4px 4px 10px rgba(66, 68, 90, 1);" icon={faMapPin} size="3x" />),
+                html: ReactDOMServer.renderToString(<FontAwesomeIcon icon={faMapPin} size="3x" />),
                 className: 'text-primary-500',
                 iconSize: [32, 32],
                 iconAnchor: [15, 36]

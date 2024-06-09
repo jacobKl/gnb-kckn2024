@@ -31,6 +31,7 @@ Route::prefix('api')->group(function () {
     Route::get("/get-stops-by-prefix", [GTFSController::class, 'getStopsByPrefix']);
     Route::get("/find-route", [GTFSController::class, 'findRoute']);
     Route::get('/get-routes-by-string/{routeName}', [GTFSController::class, 'getRoutesByString']);
+    Route::post('/get-calculated-emission', [GTFSController::class, 'getCalculatedEmission']);
 
     Route::get('/get-closest-stops/{latitude}/{longitude}', [LocationController::class, 'getClosestStops']);
 });
