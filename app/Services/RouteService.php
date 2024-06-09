@@ -6,6 +6,7 @@ use App\Models\Routes;
 use App\Models\Stop;
 use App\Models\StopTime;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as IlluminateCollection;
 
 class RouteService
 {
@@ -32,7 +33,7 @@ class RouteService
     public function findRoute(string $startStopId, string $endStopId): array
     {
         $stops = Stop::all();
-        $stopsMap =[];
+        $stopsMap = [];
 
         foreach ($stops as $stop) {
             $stopsMap[$stop->stop_id] = $stop;
@@ -72,10 +73,10 @@ class RouteService
                         })
                         ->values()
                         ->map(function (StopTime $stopTime) use ($stopsMap) {
-                        return [...$stopTime->toArray(), "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
-                            "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
-                            "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
-                    })
+                            return [...$stopTime->toArray(), "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
+                                "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
+                                "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
+                        })
 
                     );
                 }
@@ -112,18 +113,7 @@ class RouteService
                     foreach ($intersection as $intersectionId)
                         $currentlyChecked = $endStops->filter(fn(StopTime $stopTime) => $stopTime->stop_id == $intersectionId)->first();
                     if ($currentlyChecked->stop_sequence < $destination->stop_sequence) {
-                        $connection[$startTripId][] = ["start" => $startStops->map(function (StopTime $stopTime) use ($stopsMap) {
-                            return [...$stopTime->toArray(),
-                                "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
-                                "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
-                                "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
-                        }),
-                            "end" => $endStops->map(function (StopTime $stopTime) use ($stopsMap) {
-                                return [...$stopTime->toArray(),
-                                    "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
-                                    "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
-                                    "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon];
-                            })];
+                            $connection[] = $this->mergeStops($startStops, $endStops, $intersectionId, $startStopId, $endStopId);
                         break;
                     }
                 }
@@ -135,5 +125,49 @@ class RouteService
             'route' => 'change',
             'trips' => $connection
         ];
+    }
+
+    public function mergeStops(IlluminateCollection $startStops, IlluminateCollection $endStops, int $intersectionId, string $startStopId, string $endStopId)
+    {
+        $stops = Stop::all();
+        $stopsMap = [];
+
+        foreach ($stops as $stop) {
+            $stopsMap[$stop->stop_id] = $stop;
+        }
+
+        $startStop = $startStops->filter(function (StopTime $stopTime) use ($startStopId) {
+            return $stopTime->stop_id == $startStopId;
+        })->first();
+
+        $intersectionStopFromStart = $startStops->filter(function (StopTime $stopTime) use ($intersectionId) {
+            return $stopTime->stop_id == $intersectionId;
+        })->first();
+
+        $intersectionStopFromEnd = $endStops->filter(function (StopTime $stopTime) use ($intersectionId) {
+            return $stopTime->stop_id == $intersectionId;
+        })->first();
+
+        $endStop = $endStops->filter(function (StopTime $stopTime) use ($endStopId) {
+            return $stopTime->stop_id == $endStopId;
+        })->first();
+
+        $filteredStartStops = $startStops->filter(function (StopTime $stopTime) use ($startStop, $intersectionStopFromStart) {
+            return $stopTime->stop_sequence >= $startStop->stop_sequence && $stopTime->stop_sequence <= $intersectionStopFromStart->stop_sequence;
+        });
+
+        $filteredEndStops = $endStops->filter(function (StopTime $stopTime) use ($endStop, $intersectionStopFromEnd) {
+            return $stopTime->stop_sequence > $intersectionStopFromEnd->stop_sequence && $stopTime->stop_sequence <= $endStop->stop_sequence;
+        });
+
+        $mergedTrip = $filteredStartStops->merge($filteredEndStops);
+
+        return $mergedTrip->map(function (StopTime $stopTime) use ($stopsMap, $intersectionStopFromStart) {
+            return [...$stopTime->toArray(),
+                "stop_name" => $stopsMap[$stopTime->stop_id]->stop_name,
+                "stop_lat" => $stopsMap[$stopTime->stop_id]->stop_lat,
+                "stop_lon" => $stopsMap[$stopTime->stop_id]->stop_lon,
+                "is_intersection" => $stopTime === $intersectionStopFromStart];
+        });
     }
 }
