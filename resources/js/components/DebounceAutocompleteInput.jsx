@@ -41,7 +41,7 @@ function DebounceAutocompleteInput({ setSelected, setTripSearched, disabled }) {
                     disabled={disabled}
                 />
                 {(matchedLocations && !finished) ? (
-                    <ol className="absolute top-100 w-full shadow max-input-height overflow-scroll">
+                    <ol className="absolute top-100 w-full shadow max-input-height overflow-y-scroll">
                         {matchedLocations.map((location, j) => (
                             <li className="bg-white p-2 text-sm cursor-pointer" onClick={() => select(location)} key={j}>{location.stop_name}</li>
                         ))}
