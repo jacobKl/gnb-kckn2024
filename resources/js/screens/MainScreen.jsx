@@ -4,7 +4,6 @@ import {
     TileLayer,
     Marker,
     Popup,
-    useMap,
     Polyline,
 } from "react-leaflet";
 import { useUserLocation } from "./../hooks/useUserLocation";

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useQuery} from 'react-query';
 import {faRoute, faArrowDown, faArrowRight, faArrowLeft, faArrowsLeftRight} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import Loader from './Loader';
 
 export const calcTimeToSeconds = (h) => {
     let hSplitted = h.split(":")
@@ -36,10 +37,8 @@ function Stops() {
         for (let i = 0; i < stopsResponse.length; i++) {
             try {
                 higherDimensionStopsResponse[i % (stopsResponse.length / 2)].stops.push(stopsResponse[i])
-            } catch (e) {
-            }
+            } catch (e) { }
         }
-        console.log(higherDimensionStopsResponse);
 
         chooseTrip(false);
         setStopRoutes(false);
@@ -51,7 +50,6 @@ function Stops() {
     }
 
     const getStopRoutes = async (name) => {
-        console.log("https://kckn24.ddev.site/api/get-routes-by-string/" + encodeURIComponent(name));
         let routesResponse = await fetch("https://kckn24.ddev.site/api/get-routes-by-string/" + encodeURIComponent(name)).then(res => res.json());
         chooseStop(name);
         setStopRoutes(routesResponse.reduce((acc, current) => {
@@ -67,7 +65,7 @@ function Stops() {
         setStopsPair(routeId);
     }
 
-    if (isLoading) return 'Loading...';
+    if (isLoading) return <Loader />;
 
 
     return (

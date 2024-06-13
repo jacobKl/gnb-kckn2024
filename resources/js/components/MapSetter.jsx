@@ -41,6 +41,7 @@ export const createFontAwesomeMarkerIcon = (type) => {
 
 function MapSetter({ zoom, center }) {
     const map = useMap();
+
     useEffect(() => {
         map.setView([center.lat, center.lng], zoom);
     }, [center, zoom]);
