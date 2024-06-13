@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getStopsByPrefix } from "../utils/api";
 
-function DebounceAutocompleteInput({ setSelected, setTripSearched, disabled }) {
+function DebounceAutocompleteInput({ setSelected, disabled }) {
     const [searchPhrase, setSearchPhrase] = useState("");
     const [matchedLocations, setMatchedLocations] = useState("");
     const [finished, setFinished] = useState(false);
@@ -11,7 +11,6 @@ function DebounceAutocompleteInput({ setSelected, setTripSearched, disabled }) {
             const delayDebounceFn = setTimeout(async () => {
                 const response = await getStopsByPrefix(searchPhrase);
                 setMatchedLocations(response);
-                setTripSearched(false)
             }, 1000);
 
             return () => clearTimeout(delayDebounceFn);

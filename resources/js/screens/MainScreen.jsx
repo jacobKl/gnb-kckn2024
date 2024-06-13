@@ -13,6 +13,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap, faXmark, faLeaf, faTree } from "@fortawesome/free-solid-svg-icons";
 import MapSetter, { createFontAwesomeMarkerIcon } from "../components/MapSetter";
 import Loader from "../components/Loader";
+import Header from "../components/Header";
+import WithContext from "../hoc/WithContext";
 
 const parseTime = (time) => {
     const part = time.substr(0, 5).split(':');
@@ -30,20 +32,19 @@ const getDescription = (track) => {
     return desc.reverse();
 }
 
-function MainScreen() {
+function MainScreen({state}) {
     const [location] = useUserLocation();
 
     const [selectedRoute, setSelectedRoute] = useState();
-    const [firstStop, setFirstStop] = useState();
-    const [secondStop, setSecondStop] = useState();
-    const [tripSearched, setTripSearched] = useState(false);
     const [zoom, setZoom] = useState(12);
     const [center, setCenter] = useState({ lat: 50.049683, lng: 19.944544 });
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState([]);
 
+    const { firstStop, secondStop } = state;
+
     const { isLoading, error, data, refetch } = useQuery({
-        queryKey: ["routeData"],
+        queryKey: [`route-data-${firstStop.id}-${secondStop.id}`],
         queryFn: () =>
             fetch(`/api/find-route?start_stop_id=${firstStop.stop_id}&end_stop_id=${secondStop.stop_id}`).then(
                 (res) => res.json().then((res) => {
@@ -82,42 +83,13 @@ function MainScreen() {
             setModalData(emissionsResponse);
             setShowModal(true);
         }
-        setTripSearched(true);
     };
 
     if (isLoading) return <Loader />;
 
     return (
         <div className="main">
-            <header className="z-30 relative">
-                <nav className="topnav bg-primary-500 p-2 border-gray-200 px-4 lg:px-6 py-2.5">
-                    <div className="routing-form-wrapper flex flex-wrap justify-between gap-4 items-center mx-auto max-w-screen-xl">
-                        <div className="text-lg text-white font-bold">
-                            TRASOWNICZEK
-                        </div>
-                        <div className="routing-form flex gap-2">
-                            <DebounceAutocompleteInput
-                                setTripSearched={setTripSearched}
-                                setSelected={setFirstStop}
-                            />
-
-                            <DebounceAutocompleteInput
-                                setTripSearched={setTripSearched}
-                                setSelected={setSecondStop}
-                                disabled={!firstStop}
-                            />
-
-                            <button
-                                className="shadow bg-accent-500 p-1 px-3 rounded-full text-white"
-                                onClick={searchTrip}
-                                disabled={!firstStop && !secondStop}
-                            >
-                                Szukaj
-                            </button>
-                        </div>
-                    </div>
-                </nav>
-            </header>
+            <Header searchTrip={searchTrip} />
             {
                 selectedRoute ? (
                     <div className="fixed w-full bottom-[70px] bg-white z-40 flex p-1 gap-2">
@@ -134,7 +106,7 @@ function MainScreen() {
                     </div>
                 ) : null
             }
-            {tripSearched ? (
+            {state.tripSearched ? (
                 <a
                     target="_blank"
                     className="fixed bottom-[140px] z-30  bg-white right-4 rounded shadow p-3"
@@ -196,4 +168,4 @@ function MainScreen() {
     );
 }
 
-export default MainScreen;
+export default WithContext(MainScreen);

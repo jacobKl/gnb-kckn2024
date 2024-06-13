@@ -4,12 +4,15 @@ import {
     QueryClient,
     QueryClientProvider,
 } from 'react-query'
+import AppContextProvider from './context/AppContextProvider';
 
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('app')).render(
-    <QueryClientProvider client={queryClient}>
-        <App />
-    </QueryClientProvider>
+    <AppContextProvider>
+        <QueryClientProvider client={queryClient}>
+            <App />
+        </QueryClientProvider>
+    </AppContextProvider>
 );
